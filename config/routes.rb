@@ -54,5 +54,6 @@ MilitaryOrder::Application.routes.draw do
   #     resources :products
   #   end
   resources :timetable
+  resources :soldier
   root 'timetable#index'
 end

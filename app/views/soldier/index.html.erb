@@ -1,0 +1,19 @@
+<!-- Table -->
+<table class="table">
+  <thead>
+  <tr>
+    <th>Звание</th>
+    <th>ФИО</th>
+    <th>Действие</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @solders.each do |s| %>
+      <tr>
+        <th>Полковник</th>
+        <th><%= s.surname + s.name[0] + '.' + s.patronymic[0]%></th>
+        <th>Изменить</th>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
