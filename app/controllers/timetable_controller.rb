@@ -1,4 +1,4 @@
-class TimetableController < ActionController::Base
+class TimetableController < ApplicationController
   def index
 
   end
