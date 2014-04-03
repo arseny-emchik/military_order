@@ -1,0 +1,10 @@
+<%= simple_form_for @soldier, url: soldiers_path, method: 'post' do |f| %>
+
+    <%= render partial: 'soldiers/form', locals: {f: f} %>
+
+    <%= link_to soldiers_path, class: 'btn btn-primary' do
+      raw '<span class="glyphicon glyphicon-chevron-left"></span> Назад'
+    end
+    %>
+    <%= f.submit 'Сохранить', class: 'btn btn-primary' %>
+<% end %>

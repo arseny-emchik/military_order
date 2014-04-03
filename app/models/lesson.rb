@@ -1,3 +1,3 @@
 class Lesson < ActiveRecord::Base
-  has_one :soldier
+  belongs_to :soldier
 end

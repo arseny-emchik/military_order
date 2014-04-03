@@ -14,8 +14,8 @@
       <h1>Military Order <small>// a.emchik <%=Time.now.year%> ©</small></h1>
     </div>
     <ul class="nav nav-tabs">
-      <li <%= 'class = "active"'.html_safe if @current_tab == :timetable %>><a href="#">Расписание</a></li>
-      <li <%= 'class = "active"'.html_safe if @current_tab == :solders %>><a href="#">Состав</a></li>
+      <li <%= 'class = "active"'.html_safe if @current_tab == :timetables %>><a href='<%= "#{request.protocol}#{request.host_with_port}" %>'>Расписание</a></li>
+      <li <%= 'class = "active"'.html_safe if @current_tab == :soldiers %>><a href='<%= "#{request.protocol}#{request.host_with_port}/soldiers"%>'>Состав</a></li>
       <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>><a href="#">Настройки</a></li>
     </ul>
     <div class='col-md-10'>

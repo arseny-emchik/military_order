@@ -1,0 +1,16 @@
+<div class="form-inputs">
+  <div class="row">
+    <div class='col-md-6'>
+      <%= f.input :surname, label: 'Фамилия: ', placeholder: 'Иванов', input_html: {rows: 2, style: 'width: 70%'} %>
+      <%= f.input :name, label: 'Имя: ', type: 'text', class: 'form-control', placeholder: 'Иван', input_html: {rows: 2, style: 'width: 70%'} %>
+      <%= f.input :patronymic, label: 'Отчество: ', type: 'text', class: 'form-control', placeholder: 'Иванович', input_html: {rows: 2, style: 'width: 70%'} %>
+    </div>
+    <div class='col-md-6'>
+      <%= f.association :rank, label: 'Звание:', collection: Rank.all, prompt: 'не указанно', input_html: {rows: 2, style: 'width: 70%'} %>
+    </div>
+  </div>
+</div>
+
+
+
+

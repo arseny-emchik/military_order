@@ -53,7 +53,7 @@ MilitaryOrder::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :timetable
-  resources :soldier
-  root 'timetable#index'
+  resources :timetables
+  resources :soldiers
+  root 'timetables#index'
 end

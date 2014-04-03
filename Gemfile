@@ -44,4 +44,6 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 gem 'bootstrap-sass', '~> 3.1.1.0'
+gem 'simple_form'
+gem 'colored'
 
