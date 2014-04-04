@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  Russian.init_i18n
+
   layout :layout_by_resource
   before_filter :initialize_for_layout, except: [:new]
 

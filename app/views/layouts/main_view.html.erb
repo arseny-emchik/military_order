@@ -11,11 +11,15 @@
 <div class="row">
   <div class="container">
     <div class="page-header">
-      <h1>Military Order <small>// a.emchik <%=Time.now.year%> ©</small></h1>
+      <h1>Military Order
+        <small>// a.emchik <%= Time.now.year %> ©</small>
+      </h1>
     </div>
     <ul class="nav nav-tabs">
-      <li <%= 'class = "active"'.html_safe if @current_tab == :timetables %>><a href='<%= "#{request.protocol}#{request.host_with_port}" %>'>Расписание</a></li>
-      <li <%= 'class = "active"'.html_safe if @current_tab == :soldiers %>><a href='<%= "#{request.protocol}#{request.host_with_port}/soldiers"%>'>Состав</a></li>
+      <li <%= 'class = "active"'.html_safe if @current_tab == :timetables %>>
+        <a href='<%= "#{request.protocol}#{request.host_with_port}" %>'>Расписание</a></li>
+      <li <%= 'class = "active"'.html_safe if @current_tab == :soldiers %>>
+        <a href='<%= "#{request.protocol}#{request.host_with_port}/soldiers" %>'>Состав</a></li>
       <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>><a href="#">Настройки</a></li>
     </ul>
     <div class='col-md-10'>
@@ -25,9 +29,9 @@
     <div class='col-md-2'>
       <br>
       <ul class="nav nav-pills nav-stacked">
-        <li class = 'active'><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Messages</a></li>
+        <% Date::MONTHNAMES.slice(1,12).each_with_index do |m, index| %>
+            <li <%='class = "active"'.html_safe if index + 1 == Date.today.month %>><a href="#"><%= m %></a></li>
+        <% end %>
       </ul>
     </div>
   </div>
@@ -35,3 +39,4 @@
 
 </body>
 </html>
+

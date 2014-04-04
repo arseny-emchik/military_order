@@ -45,5 +45,5 @@ end
 # gem 'debugger', group: [:development, :test]
 gem 'bootstrap-sass', '~> 3.1.1.0'
 gem 'simple_form'
-gem 'colored'
+gem 'russian', '~> 0.6.0'
 
