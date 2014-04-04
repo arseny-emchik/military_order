@@ -1,26 +1,34 @@
-<%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
-<!-- Table -->
-<table class="table">
-  <thead>
-  <tr>
-    <th>ФИО</th>
-    <th>Кол-во лекций</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @soldiers.each do |s| %>
+<div class="row">
+  <div class="col-lg-9">
+    <%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
+    <hr>
+    <!-- Table -->
+    <table class="table table-striped ">
+      <thead>
       <tr>
-        <th>
-          <%= link_to soldier_path(s), method: :delete, confirm: 'Вы точно уверенны?'  do
-            raw '<span style= "color: red" class="glyphicon glyphicon-remove"></span>'
-          end %>
-          <%= link_to edit_soldier_path(s) do
-            raw '<span class="glyphicon glyphicon-pencil"></span>'
-          end %>
-          <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' '%></span>
-          <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
-        </th>
+        <th>ФИО</th>
+        <th>Кол-во лекций</th>
       </tr>
-  <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+      <% @soldiers.each do |s| %>
+          <tr>
+            <th>
+              <%= link_to soldier_path(s), method: :delete, confirm: 'Вы точно уверенны?' do
+                raw '<span style= "color: red" class="glyphicon glyphicon-remove"></span>'
+              end %>
+              <%= link_to edit_soldier_path(s) do
+                raw '<span class="glyphicon glyphicon-pencil"></span>'
+              end %>
+              <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
+              <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
+            </th>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-lg-3">
+    somthing
+  </div>
+</div>

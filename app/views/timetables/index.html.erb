@@ -1,1 +1,29 @@
-j lksdjglgj
+<ul class="nav nav-pills nav-justified">
+  <li>Год 2014  выждалджл</li>
+  <% Date::MONTHNAMES.slice(1, 12).each_with_index do |m, index| %>
+      <li <%= 'class = "active"'.html_safe if  index + 1 == Date.new(@current_year, @current_month, 1).month %>><a href="#"><%= Russian.strftime(Date.new(@current_year, index + 1, 1 ), '%B')%></a></li>
+  <% end %>
+</ul>
+<hr>
+<!-- Table -->
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ФИО</th>
+    <% for day in 1..Date.new(@current_year, @current_month, 1).end_of_month.day do %>
+        <th><%= day %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @soldiers.each do |s| %>
+      <tr>
+        <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>        </th>
+        <% 0.upto(Date.new(@current_year, @current_month, 1).end_of_month.day - 1) do |day|%>
+            <% current_day = Date.new(@current_year, @current_month, 1) + day.day%>
+            <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>></th>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
