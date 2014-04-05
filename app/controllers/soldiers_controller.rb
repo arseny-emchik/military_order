@@ -23,7 +23,6 @@ class SoldiersController < ApplicationController
   end
 
   def new
-    @ranks = Rank.all
     @soldier = Soldier.new
   end
 

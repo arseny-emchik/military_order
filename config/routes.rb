@@ -55,5 +55,6 @@ MilitaryOrder::Application.routes.draw do
   #   end
   resources :timetables
   resources :soldiers
+  resources :schedules
   root 'timetables#index'
 end
