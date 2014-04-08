@@ -1,7 +1,18 @@
 <ul class="nav nav-pills nav-justified">
-  <li>Год 2014  выждалджл</li>
-  <% Date::MONTHNAMES.slice(1, 12).each_with_index do |m, index| %>
-      <li <%= 'class = "active"'.html_safe if  index + 1 == Date.new(@current_year, @current_month, 1).month %>><a href="#"><%= Russian.strftime(Date.new(@current_year, index + 1, 1 ), '%B')%></a></li>
+  <li>
+    <div class="btn-group">
+      <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+        Large button <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>2014</li>
+        <li>2015</li>
+      </ul>
+    </div>
+  </li>
+  <% 1.upto(12) do |month|%>
+      <li <%= 'class = "active"'.html_safe if  month == Date.new(@current_year, @current_month, 1).month %>>
+        <a href="#"><%= Russian.strftime(Date.new(@current_year, month, 1), '%B') %></a></li>
   <% end %>
 </ul>
 <hr>
@@ -19,8 +30,8 @@
   <% @soldiers.each do |s| %>
       <tr>
         <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>        </th>
-        <% 0.upto(Date.new(@current_year, @current_month, 1).end_of_month.day - 1) do |day|%>
-            <% current_day = Date.new(@current_year, @current_month, 1) + day.day%>
+        <% 0.upto(Date.new(@current_year, @current_month, 1).end_of_month.day - 1) do |day| %>
+            <% current_day = Date.new(@current_year, @current_month, 1) + day.day %>
             <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>></th>
         <% end %>
       </tr>
