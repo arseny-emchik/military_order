@@ -53,8 +53,8 @@ MilitaryOrder::Application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :timetables
-  resources :soldiers
-  resources :schedules
+  resources :timetables, except: [:show]
+  resources :soldiers, except: [:show]
+  resources :schedules, except: [:show]
   root 'timetables#index'
 end

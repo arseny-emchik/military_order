@@ -3,10 +3,6 @@ class SoldiersController < ApplicationController
     @soldiers = Soldier.all
   end
 
-  def show
-    @soldier = Soldier.find(params[:id])
-  end
-
   def edit
     @soldier = Soldier.find(params[:id])
   end
@@ -39,7 +35,7 @@ class SoldiersController < ApplicationController
   def destroy
     @soldier = Soldier.find(params[:id])
     @soldier.destroy
-    redirect_to soldier_url, notice: 'Post was successfully destroyed.'
+    redirect_to soldiers_url, notice: 'Post was successfully destroyed.'
   end
 
   private

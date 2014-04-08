@@ -14,7 +14,7 @@
       <% @soldiers.each do |s| %>
           <tr>
             <th>
-              <%= link_to soldier_path(s), method: :delete, confirm: 'Вы точно уверенны?' do
+              <%= link_to soldier_path(s), method: :delete, confirm: 'Вы точно уверены?' do
                 raw '<span style= "color: red" class="glyphicon glyphicon-remove"></span>'
               end %>
               <%= link_to edit_soldier_path(s) do
