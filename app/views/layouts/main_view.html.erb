@@ -19,7 +19,8 @@
       <a href='<%= "#{request.protocol}#{request.host_with_port}" %>'>Расписание</a></li>
     <li <%= 'class = "active"'.html_safe if @current_tab == :soldiers %>>
       <a href='<%= "#{request.protocol}#{request.host_with_port}/soldiers" %>'>Состав</a></li>
-    <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>><a href="#">Настройки</a></li>
+    <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>>
+      <a href='<%= "#{request.protocol}#{request.host_with_port}/settings" %>'>Настройки</a></li>
   </ul>
   <br>
   <%= yield %>

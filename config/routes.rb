@@ -56,5 +56,6 @@ MilitaryOrder::Application.routes.draw do
   resources :timetables, except: [:show]
   resources :soldiers, except: [:show]
   resources :schedules, except: [:show]
+  resources :settings, except: [:show]
   root 'timetables#index'
 end
