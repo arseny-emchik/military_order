@@ -12,7 +12,8 @@
   </li>
   <% 1.upto(12) do |month|%>
       <li <%= 'class = "active"'.html_safe if  month == Date.new(@current_year, @current_month, 1).month %>>
-        <a href="#"><%= Russian.strftime(Date.new(@current_year, month, 1), '%B') %></a></li>
+        <%= link_to(Russian.strftime(Date.new(@current_year, month, 1), '%B'), action: 'index', month: month) %>
+        <!--<a href="#"><%= Russian.strftime(Date.new(@current_year, month, 1), '%B') %></a></li>-->
   <% end %>
 </ul>
 <hr>
@@ -21,7 +22,7 @@
   <thead>
   <tr>
     <th>ФИО</th>
-    <% for day in 1..Date.new(@current_year, @current_month, 1).end_of_month.day do %>
+    <% 1.upto Date.new(@current_year, @current_month, 1).end_of_month.day do |day| %>
         <th><%= day %></th>
     <% end %>
   </tr>
