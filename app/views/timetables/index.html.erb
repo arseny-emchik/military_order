@@ -32,7 +32,7 @@
       <tr>
         <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></th>
         <% 1.upto @current_date.end_of_month.day do |day| %>
-            <% current_day = @current_date + day.day %>
+            <% current_day = @current_date + day.day - 1%>
             <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>></th>
         <% end %>
       </tr>

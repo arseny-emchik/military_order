@@ -46,4 +46,6 @@ end
 gem 'bootstrap-sass', '~> 3.1.1.0'
 gem 'simple_form'
 gem 'russian', '~> 0.6.0'
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 

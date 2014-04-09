@@ -29,6 +29,60 @@
     </table>
   </div>
   <div class="col-lg-3">
-    somthing
+    <h4>Статистика</h4>
+    <hr>
+    <div class="row">
+      <div class="col-lg-2">
+        <h4>C: </h4>
+      </div>
+      <div class="col-lg-10">
+        <div class="form-group">
+          <div class='input-group date' id='datetimepicker1'>
+            <input type='text' class="form-control"/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-lg-2">
+        <h4>По: </h4>
+      </div>
+      <div class="col-lg-10">
+        <div class="form-group">
+          <div class='input-group date' id='datetimepicker2'>
+            <input type='text' class="form-control"/>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-primary">Получить статистику</button>
+
   </div>
 </div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            pickTime: false,
+            language: 'ru'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker2').datetimepicker({
+            pickTime: false,
+            language: 'ru'
+        });
+    });
+</script>
+
