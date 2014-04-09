@@ -1,0 +1,20 @@
+<%= form_tag(:action => 'create') do %>
+
+
+    <table cellspacing="2">
+      <tr>
+        <td><label>Количество пар:</label></td>
+        <td><%= text_field(:lesson, :hours) %></td>
+      </tr>
+
+      <tr>
+        <td><label>Наряд:</label></td>
+        <td><%= check_box_tag(:patrol) %></td>
+      </tr>
+
+    </table>
+
+    <%= submit_tag('Save') %>
+
+
+<% end %>

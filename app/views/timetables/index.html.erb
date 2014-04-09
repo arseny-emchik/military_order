@@ -10,10 +10,9 @@
       </ul>
     </div>
   </li>
-  <% 1.upto(12) do |month|%>
-      <li <%= 'class = "active"'.html_safe if  month == Date.new(@current_year, @current_month, 1).month %>>
-        <%= link_to(Russian.strftime(Date.new(@current_year, month, 1), '%B'), action: 'index', month: month) %>
-        <!--<a href="#"><%= Russian.strftime(Date.new(@current_year, month, 1), '%B') %></a></li>-->
+  <% 1.upto 12 do |month|%>
+      <li <%= 'class = "active"'.html_safe if  month == @current_date.month %>>
+        <%= link_to(Russian.strftime(Date.new(@current_date.year, month, 1), '%B'), action: 'index', month: month) %>
   <% end %>
 </ul>
 <hr>
@@ -22,7 +21,7 @@
   <thead>
   <tr>
     <th>ФИО</th>
-    <% 1.upto Date.new(@current_year, @current_month, 1).end_of_month.day do |day| %>
+    <% 1.upto @current_date.end_of_month.day do |day| %>
         <th><%= day %></th>
     <% end %>
   </tr>
@@ -31,8 +30,8 @@
   <% @soldiers.each do |s| %>
       <tr>
         <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>        </th>
-        <% 0.upto(Date.new(@current_year, @current_month, 1).end_of_month.day - 1) do |day| %>
-            <% current_day = Date.new(@current_year, @current_month, 1) + day.day %>
+        <% 1.upto @current_date.end_of_month.day do |day| %>
+            <% current_day = @current_date + day.day %>
             <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>></th>
         <% end %>
       </tr>
