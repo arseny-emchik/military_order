@@ -1,4 +1,7 @@
 class TimetablesController < ApplicationController
+
+  SPAN_YEARS = 5.freeze
+
   def index
     @color_day_off = '#faf0e6'
     @current_date = set_date

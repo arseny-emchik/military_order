@@ -2,17 +2,18 @@
   <li>
     <div class="btn-group">
       <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
-        Large button <span class="caret"></span>
+        Год: <%= @current_date.year %> <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li>2014</li>
-        <li>2015</li>
+        <% (Date.current.year - 5).upto(Date.current.year + 5) do |year| %>
+            <li <%='style="background-color: #faf0e6"'.html_safe if year == Date.current.year%>> <%= link_to(year, action: 'index', year: year, month: @current_date.month)%></li>
+        <% end %>
       </ul>
     </div>
   </li>
-  <% 1.upto 12 do |month|%>
+  <% 1.upto 12 do |month| %>
       <li <%= 'class = "active"'.html_safe if  month == @current_date.month %>>
-        <%= link_to(Russian.strftime(Date.new(@current_date.year, month, 1), '%B'), action: 'index', month: month) %>
+        <%= link_to(Russian.strftime(Date.new(@current_date.year, month, 1), '%B'), action: 'index', year: @current_date.year, month: month) %>
   <% end %>
 </ul>
 <hr>
@@ -29,7 +30,7 @@
   <tbody>
   <% @soldiers.each do |s| %>
       <tr>
-        <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>        </th>
+        <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></th>
         <% 1.upto @current_date.end_of_month.day do |day| %>
             <% current_day = @current_date + day.day %>
             <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>></th>
