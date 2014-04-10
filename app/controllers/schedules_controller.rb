@@ -19,8 +19,17 @@ class SchedulesController < ApplicationController
   end
 
   def new
+    current_date = DateTime.strptime(params[:date], '%Y-%m-%d')
+    soldier_id = params[:soldier_id].to_i
+
     @lesson = Lesson.new
+    @lesson.date = current_date
+    @lesson.soldier_id = soldier_id
+
     @patrol = Patrol.new
+    @patrol.patrol_start = current_date
+    @patrol.patrol_end = current_date + 1.day
+    @patrol.soldier_id = soldier_id
   end
 
   def create
@@ -49,6 +58,6 @@ class SchedulesController < ApplicationController
   end
 
   def patrol_params
-    params.require(:patrol).permit(:patrol_start, :patrol_end, :soldier_id )
+    params.require(:patrol).permit(:patrol_start, :patrol_end, :soldier_id)
   end
 end
