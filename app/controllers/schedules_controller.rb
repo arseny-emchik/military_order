@@ -19,28 +19,26 @@ class SchedulesController < ApplicationController
   end
 
   def new
-    current_date = DateTime.strptime(params[:date], '%Y-%m-%d')
-    soldier_id = params[:soldier_id].to_i
-
     @lesson = Lesson.new
-    @lesson.date = current_date
-    @lesson.soldier_id = soldier_id
-
     @patrol = Patrol.new
-    @patrol.patrol_start = current_date
-    @patrol.patrol_end = current_date + 1.day
-    @patrol.soldier_id = soldier_id
+
+    @lesson.soldier_id = @patrol.soldier_id = get_soldier_id
+    @lesson.date = @patrol.patrol_start = get_date
+    @patrol.patrol_end = @patrol.patrol_start + 1.day
   end
 
   def create
-    @lesson = Lesson.new(lesson_params)
-    @patrol = Patrol.new(patrol_params)
-
-    if @lesson.save && @patrol.save
-      redirect_to soldiers_url, notice: 'Post was successfully created.'
-    else
-      render action: 'new'
+    if params[:patrol_present] == 'false'
+      @lesson = Lesson.new(lesson_params)
+      redirect_to timetables_path, notice: 'Post was successfully created.' and return if @lesson.save
     end
+
+    if params[:patrol_present] == 'true'
+      @patrol = Patrol.new(patrol_params)
+      redirect_to timetables_path, notice: 'Post was successfully created.' and return if @patrol.save
+    end
+
+    redirect_to timetables_path, notice: 'Save ERROR'
   end
 
   def destroy
@@ -52,6 +50,14 @@ class SchedulesController < ApplicationController
   end
 
   private
+
+  def get_date
+    DateTime.strptime(params[:date], '%Y-%m-%d')
+  end
+
+  def get_soldier_id
+    params[:soldier_id].to_i
+  end
 
   def lesson_params
     params.require(:lesson).permit(:hours, :date, :soldier_id)

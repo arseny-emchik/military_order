@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   Russian.init_i18n
 
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   layout :layout_by_resource
   before_filter :initialize_for_layout, except: [:new]
 

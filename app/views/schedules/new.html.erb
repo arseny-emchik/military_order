@@ -1,20 +1,28 @@
 <%= form_tag(:action => 'create') do %>
 
+    <%= hidden_field(:lesson, :date, value: @lesson.date) %>
+    <%= hidden_field(:lesson, :soldier_id, value: @lesson.soldier_id) %>
 
-    <table cellspacing="2">
+    <%= hidden_field(:patrol, :patrol_start, value: @patrol.patrol_start)%>
+    <%= hidden_field(:patrol, :patrol_end, value: @patrol.patrol_end) %>
+    <%= hidden_field(:patrol, :soldier_id, value: @patrol.soldier_id) %>
+
+
+    <table cellspacing="3">
       <tr>
-        <td><label>Количество пар:</label></td>
+        <td><label>Пары </label></td>
+        <td><%=radio_button_tag(:patrol_present, 'false', checked = true) %></td>
+      </tr>
+      <tr>
+        <td><label>Количество пар: </label></td>
         <td><%= text_field(:lesson, :hours) %></td>
       </tr>
 
       <tr>
-        <td><label>Наряд:</label></td>
-        <td><%= check_box_tag(:patrol) %></td>
+        <td><label>Наряд </label></td>
+        <td><%= radio_button_tag(:patrol_present, 'true') %></td>
       </tr>
-
     </table>
 
     <%= submit_tag('Save') %>
-
-
 <% end %>

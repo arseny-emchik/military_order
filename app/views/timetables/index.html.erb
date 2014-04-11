@@ -34,7 +34,7 @@
         <% 1.upto @current_date.end_of_month.day do |day| %>
             <% current_day = @current_date + day.day - 1%>
             <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>>
-              <%= link_to 'h', controller: 'schedules', action: 'new', date: current_day, soldier_id: s.id  %>
+              <%= link_to 'e', controller: 'schedules', action: 'new', date: current_day, soldier_id: s.id  %>
             </th>
         <% end %>
       </tr>
