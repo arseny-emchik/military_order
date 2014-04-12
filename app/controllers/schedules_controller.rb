@@ -1,7 +1,7 @@
 class SchedulesController < ApplicationController
   def edit
-    @lesson = Lesson.find(params[:id])
-    @patrol = Patrol.find(params[:id])
+    @lesson = Lesson.where(date: get_date, soldier_id: get_soldier_id).first
+    @patrol = Patrol.where(patrol_start: get_date, soldier_id: get_soldier_id).first
   end
 
   def update
