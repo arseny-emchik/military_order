@@ -1,5 +1,7 @@
 MilitaryOrder::Application.routes.draw do
-  resources :timetables, except: [:show]
+  resources :timetables, except: [:show]  do
+    post :ajax_load_form, on: :collection
+  end
   resources :soldiers, except: [:show]
   resources :schedules, except: [:show]
   resources :settings, except: [:show]

@@ -6,7 +6,7 @@
       </button>
       <ul class="dropdown-menu">
         <% (Date.current.year - 5).upto(Date.current.year + 5) do |year| %>
-            <li <%='style="background-color: #faf0e6"'.html_safe if year == Date.current.year%>> <%= link_to(year, action: 'index', year: year, month: @current_date.month)%></li>
+            <li <%= 'style="background-color: #faf0e6"'.html_safe if year == Date.current.year %>> <%= link_to(year, action: 'index', year: year, month: @current_date.month) %></li>
         <% end %>
       </ul>
     </div>
@@ -32,12 +32,35 @@
       <tr>
         <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></th>
         <% 1.upto @current_date.end_of_month.day do |day| %>
-            <% current_day = @current_date + day.day - 1%>
-            <th <%= "style='background-color: #{@color_day_off}'".html_safe if current_day.saturday? || current_day.sunday? %>>
-              <%=state_of_cell(current_day, s.id)%>
-            </th>
-        <% end %>
+            <% current_day = @current_date + day.day - 1 %>
+            <%= state_of_cell(:th, current_day, s.id)%>
+          <% end %>
       </tr>
   <% end %>
   </tbody>
 </table>
+
+
+
+<div id="dialog" title="Формы ввода">
+  <p></p>
+</div>
+
+
+<script>
+    $(function () {
+        function new_handler() {
+            var soldier_id = $(this).attr('soldier_id');
+            var date = $(this).attr('date');
+            $("#dialog").load('/timetables/ajax_load_form', {soldier_id: soldier_id, date: date}).dialog();
+         }
+
+        function edit_handler() {
+            alert('edit');
+
+        }
+
+        $('[data-action="n"]').click(new_handler);
+        $('[data-action="e"]').click(edit_handler);
+    });
+</script>
