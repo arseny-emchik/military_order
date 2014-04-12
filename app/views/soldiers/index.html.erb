@@ -6,8 +6,11 @@
     <table class="table table-striped ">
       <thead>
       <tr>
-        <th>ФИО</th>
-        <th>Кол-во лекций</th>
+        <th>звание &  ФИО</th>
+        <th><span style="float: right">Кол-во пар</span></th>
+        <th><span style="float: right">Кол-во нарядов</span></th>
+        <th><span style="float: right">Нарядов пт-сб</span></th>
+        <th><span style="float: right">Нарядов сб-вс</span></th>
       </tr>
       </thead>
       <tbody>
@@ -23,6 +26,10 @@
               <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
               <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
             </th>
+            <th><span style="float: right"><%= count_lessons(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
+            <th><span style="float: right"><%= count_patrols(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
+            <th><span style="float: right"><%= count_patrols_fr_sat(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
+            <th><span style="float: right"><%= count_patrols_sat_sun(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
           </tr>
       <% end %>
       </tbody>
