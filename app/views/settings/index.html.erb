@@ -1,9 +1,25 @@
-<a href="#" class="btn small" id="colorpicker" data-color-format="hex" data-color="rgb(255, 255, 255)">Change background color</a>
-
-<%= link_to 'Сменить цвет выходных', '#', class: 'btn btn-primary' %>
-
-<%= link_to "Change your password", edit_user_registration_path %>
-
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Настройки цвета</h3>
+  </div>
+  <div class="panel-body">
+    <h4>Здесь Вы можете задать цвета, которые отобразятся в таблице.</h4>
+    <!--<a href="#" class="btn small" id="colorpicker" data-color-format="hex" data-color="rgb(255, 255, 255)">Change background color</a>-->
+    <%= link_to 'Сменить цвет выходных', '#', class: 'btn btn-success', id: 'colorpicker' %>
+  </div>
+</div>
+<hr>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Email и пароль</h3>
+  </div>
+  <div class="panel-body">
+    <div>
+      <h4>Здесь Вы можите сменить Ваш Email и/или пароль.</h4>
+    </div>
+    <%= link_to 'Сменить', edit_user_registration_path, class: 'btn btn-success' %>
+  </div>
+</div>
 
 <script type="text/javascript">
     $('#colorpicker').colorpicker()
