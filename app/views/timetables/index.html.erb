@@ -50,14 +50,13 @@
 <script>
     $(function () {
         function new_handler() {
-            var soldier_id = $(this).attr('soldier_id');
-            var date = $(this).attr('date');
+            var soldier_id = $(this).attr('data-soldier-id');
+            var date = $(this).attr('data-date');
             $("#dialog").load('/timetables/ajax_load_form', {soldier_id: soldier_id, date: date}).dialog();
          }
 
         function edit_handler() {
             alert('edit');
-
         }
 
         $('[data-action="n"]').click(new_handler);
