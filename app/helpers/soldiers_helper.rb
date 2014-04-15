@@ -1,41 +1,12 @@
 module SoldiersHelper
-  def count_lessons(date_start, date_end, soldier_id)
-    date_end, date_start = date_start, date_end if date_start > date_end
-
-    Lesson.where('date >= :start AND date <= :end AND soldier_id = :soldier_id',
-                 start: date_start, end: date_end, soldier_id: soldier_id).sum(:hours)
-  end
-
-  def count_patrols(date_start, date_end, soldier_id)
-    date_end, date_start = date_start, date_end if date_start > date_end
-
-    Patrol.where('patrol_start >= :start AND patrol_start <= :end AND soldier_id = :soldier_id',
-                 start: date_start, end: date_end, soldier_id: soldier_id).count
-  end
-
-  # Friday - Saturday
-  def count_patrols_fr_sat(date_start, date_end, soldier_id)
-    date_end, date_start = date_start, date_end if date_start > date_end
-
-    arr_date = []
-    date_start.upto date_end do |day|
-       current_date = date_start + (day - 1).day
-       arr_date << current_date if current_date.friday?
+  def datepicker(id, value_name, default_date)
+    content_tag(:div, class: 'form-group') do
+      content_tag(:div, class: 'input-group date', id: id.to_s) do
+        content_tag(:input, name: value_name.to_s, type: 'text', class: 'form-control', placeholder: default_date.strftime('%d.%m.%Y') ) do
+          '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>'.html_safe
+        end
+      end
     end
 
-    (arr_date.empty?) ? 0 : Patrol.where('soldier_id = :soldier_id and patrol_start IN (:array)', array: arr_date, soldier_id: soldier_id).count
-  end
-
-  # Saturday - Sunday
-  def count_patrols_sat_sun(date_start, date_end, soldier_id)
-    date_end, date_start = date_start, date_end if date_start > date_end
-
-    arr_date = []
-    date_start.upto date_end do |day|
-      current_date = date_start + (day - 1).day
-      arr_date << current_date if current_date.saturday?
-    end
-
-    (arr_date.empty?) ? 0 : Patrol.where('soldier_id = :soldier_id and patrol_start IN (:array)', array: arr_date, soldier_id: soldier_id).count
   end
 end

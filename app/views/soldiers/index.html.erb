@@ -6,7 +6,7 @@
     <table class="table table-striped ">
       <thead>
       <tr>
-        <th>звание &  ФИО</th>
+        <th>звание & ФИО</th>
         <th><span style="float: right">Кол-во пар</span></th>
         <th><span style="float: right">Кол-во нарядов</span></th>
         <th><span style="float: right">Нарядов пт-сб</span></th>
@@ -26,10 +26,18 @@
               <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
               <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
             </th>
-            <th><span style="float: right"><%= count_lessons(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
-            <th><span style="float: right"><%= count_patrols(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
-            <th><span style="float: right"><%= count_patrols_fr_sat(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
-            <th><span style="float: right"><%= count_patrols_sat_sun(Date.current.beginning_of_month, Date.current, s.id) %></span></th>
+            <th>
+              <span style="float: right"><%= count_lessons(@date_start, @date_end, s.id) %></span>
+            </th>
+            <th>
+              <span style="float: right"><%= count_patrols(@date_start, @date_end, s.id) %></span>
+            </th>
+            <th>
+              <span style="float: right"><%= count_patrols_fr_sat(@date_start, @date_end, s.id) %></span>
+            </th>
+            <th>
+              <span style="float: right"><%= count_patrols_sat_sun(@date_start, @date_end, s.id) %></span>
+            </th>
           </tr>
       <% end %>
       </tbody>
@@ -38,55 +46,45 @@
   <div class="col-lg-3">
     <h4>Статистика</h4>
     <hr>
-    <div class="row">
-      <div class="col-lg-2">
-        <h4>C: </h4>
-      </div>
-      <div class="col-lg-10">
-        <div class="form-group">
-          <div class='input-group date' id='datetimepicker1'>
-            <input type='text' class="form-control"/>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+
+    <%= form_tag(soldiers_path, method: :get) do %>
+
+
+        <div class="row">
+          <div class="col-lg-2">
+            <h4>C: </h4>
+          </div>
+          <div class="col-lg-10">
+            <%= datepicker('date_start', 'date_start', @date_start) %>
           </div>
         </div>
-      </div>
-    </div>
 
 
-    <div class="row">
-      <div class="col-lg-2">
-        <h4>По: </h4>
-      </div>
-      <div class="col-lg-10">
-        <div class="form-group">
-          <div class='input-group date' id='datetimepicker2'>
-            <input type='text' class="form-control"/>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        <div class="row">
+          <div class="col-lg-2">
+            <h4>По: </h4>
+          </div>
+          <div class="col-lg-10">
+            <%= datepicker('date_end', 'date_end', @date_end) %>
           </div>
         </div>
-      </div>
-    </div>
 
-    <button type="button" class="btn btn-primary">Получить статистику</button>
-
+        <%= submit_tag 'Получить статистику', class: 'btn btn-primary', id: 'send_dates', name: nil%>
+    <% end %>
   </div>
 </div>
 
 
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker1').datetimepicker({
+        $('#date_start').datetimepicker({
             pickTime: false,
             language: 'ru'
         });
     });
-</script>
 
-<script type="text/javascript">
     $(function () {
-        $('#datetimepicker2').datetimepicker({
+        $('#date_end').datetimepicker({
             pickTime: false,
             language: 'ru'
         });

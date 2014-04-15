@@ -1,5 +1,9 @@
 class SoldiersController < ApplicationController
   def index
+    @date_start = get_date('date_start')
+    @date_end = get_date('date_end')
+    @date_start, @date_end = @date_end, @date_start if @date_start > @date_end
+
     @soldiers = Soldier.all
   end
 
@@ -39,6 +43,11 @@ class SoldiersController < ApplicationController
   end
 
   private
+
+  def get_date(value_name)
+    return DateTime.strptime(params[value_name], '%d.%m.%Y') unless params[value_name].nil? || params[value_name].empty?
+    value_name == 'date_start' ? Date.current.beginning_of_month : Date.current.end_of_month
+  end
 
   def soldier_params
     params.require(:soldier).permit(:surname, :name, :patronymic, :rank_id)
