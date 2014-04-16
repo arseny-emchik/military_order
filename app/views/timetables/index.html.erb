@@ -42,14 +42,14 @@
 <hr>
 <div class="row">
   <div class="col-lg-9">
-    <h3>Статистика за <%= Russian.strftime(@current_date, '%B').mb_chars.downcase %> месяц:</h3>
+    <h3>Статистика за <%= Russian.strftime(@current_date, '%B').mb_chars.downcase %>:</h3>
     <!-- Table -->
     <table class="table table-striped ">
       <thead>
       <tr>
         <th>звание & ФИО</th>
         <th><span style="float: right">Кол-во пар</span></th>
-        <th><span style="float: right">Кол-во нарядов</span></th>
+        <th><span style="float: right; color: red">Кол-во нарядов</span></th>
         <th><span style="float: right">Нарядов пт-сб</span></th>
         <th><span style="float: right">Нарядов сб-вс</span></th>
       </tr>
@@ -64,7 +64,7 @@
             <th>
               <span style="float: right"><%= count_lessons(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
             </th>
-            <th>
+            <th style="color: red">
               <span style="float: right"><%= count_patrols(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
             </th>
             <th>
