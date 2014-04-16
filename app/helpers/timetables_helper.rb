@@ -19,4 +19,9 @@ module TimetablesHelper
       ch
     end
   end
+
+
+  def soldiers_sort
+    Soldier.min_patrols
+  end
 end

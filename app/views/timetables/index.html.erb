@@ -55,7 +55,7 @@
       </tr>
       </thead>
       <tbody>
-      <% @soldiers.each do |s| %>
+      <% soldiers_sort.each do |s| %>
           <tr>
             <th>
               <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
