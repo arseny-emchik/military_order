@@ -64,8 +64,8 @@
             <th>
               <span style="float: right"><%= count_lessons(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
             </th>
-            <th style="color: red">
-              <span style="float: right"><%= count_patrols(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
+            <th>
+              <span style="float: right; color: red"><%= count_patrols(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
             </th>
             <th>
               <span style="float: right"><%= count_patrols_fr_sat(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
@@ -104,7 +104,7 @@
 
 
 
-<div id="dialog" title="Формы ввода">
+<div id="dialog" title="Диалоговое окно">
   <p></p>
 </div>
 
@@ -114,11 +114,13 @@
         function new_handler() {
             var soldier_id = $(this).attr('data-soldier-id');
             var date = $(this).attr('data-date');
-            $("#dialog").load('/timetables/ajax_load_form', {soldier_id: soldier_id, date: date}).dialog();
+            $("#dialog").load('/timetables/ajax_load_form', {soldier_id: soldier_id, date: date, action_name: 'new'}).dialog();
         }
 
         function edit_handler() {
-            alert('edit');
+            var soldier_id = $(this).attr('data-soldier-id');
+            var date = $(this).attr('data-date');
+            $("#dialog").load('/timetables/ajax_load_form', {soldier_id: soldier_id, date: date, action_name: 'edit'}).dialog();
         }
 
         $('[data-action="n"]').click(new_handler);

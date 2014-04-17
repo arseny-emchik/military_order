@@ -20,8 +20,11 @@ module TimetablesHelper
     end
   end
 
-
   def soldiers_sort
     Soldier.min_patrols
+  end
+
+  def kind_of_action(action)
+    action == 'new' ? 'Новая запись' : 'Редактировнае записи'
   end
 end
