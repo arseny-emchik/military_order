@@ -25,6 +25,11 @@ module TimetablesHelper
   end
 
   def kind_of_action(action)
-    action == 'new' ? 'Новая запись' : 'Редактировнае записи'
+    action == 'create' ? 'Новая запись' : 'Редактировнае записи'
+  end
+
+  def show_info(data, soldier_id)
+      content_tag(:h4, "Фамилия: #{Soldier.find(soldier_id).surname}") +
+      content_tag(:h4, "Дата: #{Russian.strftime(data, '%A %D').mb_chars.downcase}")
   end
 end

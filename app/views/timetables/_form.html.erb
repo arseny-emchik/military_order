@@ -1,33 +1,38 @@
 <%= form_tag(action: action_name) do %>
 
-    <h4><%=kind_of_action(action_name)%></h4>
+    <h4><%= kind_of_action(action_name) %></h4>
     <hr>
+    <%=show_info(@lesson.date || @patrol.patrol_start, @lesson.soldier_id || @patrol.soldier_id)%>
 
     <%= hidden_field(:lesson, :date, value: @lesson.date) %>
     <%= hidden_field(:lesson, :soldier_id, value: @lesson.soldier_id) %>
 
-    <%= hidden_field(:patrol, :patrol_start, value: @patrol.patrol_start)%>
+    <%= hidden_field(:patrol, :patrol_start, value: @patrol.patrol_start) %>
     <%= hidden_field(:patrol, :patrol_end, value: @patrol.patrol_end) %>
     <%= hidden_field(:patrol, :soldier_id, value: @patrol.soldier_id) %>
 
+    <form class="form-horizontal">
+      <div class="well">
+        <div class="radio">
+          <label> пары</label>
+          <%= radio_button_tag(:patrol_present, 'false', checked = true) %>
+        </div>
 
-    <table cellspacing="3">
-      <tr>
-        <td><label>Пары </label></td>
-        <td><%=radio_button_tag(:patrol_present, 'false', checked = true) %></td>
-      </tr>
-      <tr>
-        <td><label>Количество пар: </label></td>
-        <td><%= text_field(:lesson, :hours) %></td>
-      </tr>
+        <div class="form-group">
+          <label>Количество пар:</label>
+            <%= text_field(:lesson, :hours, class: 'form-control', placeholder: 'кол-во пар') %>
+        </div>
+      </div>
 
-      <tr>
-        <td><label>Наряд </label></td>
-        <td><%= radio_button_tag(:patrol_present, 'true') %></td>
-      </tr>
-    </table>
-
+      <div class="well">
+        <div class="radio">
+          <label> наряд</label>
+          <%= radio_button_tag(:patrol_present, 'true') %>
+        </div>
+      </div>
+    </form>
     <%= submit_tag('Save') %>
 <% end %>
+
 
 

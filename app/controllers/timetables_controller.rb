@@ -7,6 +7,12 @@ class TimetablesController < ApplicationController
     @current_date = set_date
 
     @soldiers = Soldier.all
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data export_csv, filename: "timetable_#{@current_date.year}_#{@current_date.month}.csv" }
+      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+    end
   end
 
   def new
@@ -66,7 +72,7 @@ class TimetablesController < ApplicationController
     action = params[:action_name]
 
     render action: action, layout: false
-   end
+  end
 
   private
 
@@ -87,6 +93,44 @@ class TimetablesController < ApplicationController
   def get_soldier_id
     params[:soldier_id].to_i
   end
+
+  # =================================================================
+  #   EXPORT CSV
+  # =================================================================
+  def export_csv
+    date_mas = []
+    date_mas << 'ФИО'
+    1.upto @current_date.end_of_month.day do |day|
+      date_mas << day.to_s
+    end
+
+    CSV.generate do |csv|
+      # header row
+      csv << date_mas
+      # data row
+      Soldier.all.each do |s|
+        csv << mas_for_soldier_csv(@current_date, s)
+      end
+    end
+  end
+
+  def mas_for_soldier_csv(date, soldier)
+    mas = []
+    mas << soldier.surname + ' ' + soldier.name[0] + '.' + soldier.patronymic[0] + '.'
+    1.upto date.end_of_month.day do |day|
+      mas << state_of_cell_csv(date.beginning_of_month + day - 1, soldier.id)
+    end
+    mas
+  end
+
+  def state_of_cell_csv(date, soldier_id)
+    lesson = Lesson.where(date: date, soldier_id: soldier_id).first
+    patrol = Patrol.where(patrol_start: date, soldier_id: soldier_id).first
+    return lesson.hours.to_s unless lesson.nil?
+    return 'н' unless patrol.nil?
+    nil
+  end
+  # =================================================================
 
   def lesson_params
     params.require(:lesson).permit(:hours, :date, :soldier_id)

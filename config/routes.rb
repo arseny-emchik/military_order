@@ -3,8 +3,9 @@ MilitaryOrder::Application.routes.draw do
     post :ajax_load_form, on: :collection
   end
 
+  get 'csv' => 'timetables#export_csv', :as => :csv
+
   resources :soldiers, except: [:show]
-  resources :schedules, except: [:show]
   resources :settings, except: [:show]
 
   devise_for :users, skip: [:registrations]
