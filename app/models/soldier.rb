@@ -8,7 +8,7 @@ class Soldier < ActiveRecord::Base
 
   def self.sort_by_patrols(sort = 'desc')
     Soldier.find_by_sql("select s.id, s.name, s.surname, s.patronymic, s.rank_id, count(*) as c from soldiers as s
-                          join patrols as p on s.id = p.soldier_id
+                          left join patrols as p on s.id = p.soldier_id
                           group by s.id, s.name, s.surname, s.patronymic, s.rank_id
                           order by c #{sort}")
   end
