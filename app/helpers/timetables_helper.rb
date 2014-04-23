@@ -41,7 +41,7 @@ module TimetablesHelper
 
   def show_info(data, soldier_id)
     content_tag(:h4, "Фамилия: #{Soldier.find(soldier_id).surname}") +
-        content_tag(:h4, "Дата: #{Russian.strftime(data, '%A %D').mb_chars.downcase}")
+        content_tag(:h4, "Дата: #{Russian.strftime(data, '%A %d.%m.%Y').mb_chars.downcase}")
   end
 
   def method_name(action_name)
