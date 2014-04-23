@@ -30,15 +30,27 @@ module TimetablesHelper
   end
 
   def soldiers_sort
-    Soldier.min_patrols
+    Soldier.sort_by_patrols('asc')
   end
 
   def kind_of_action(action)
-    action == 'create' ? 'Новая запись' : 'Редактировнае записи'
+    return 'Новая запись' if action == 'create'
+    return 'Редактировнае записи' if action == 'update'
+    'Неизвестный action!! ERROR'
   end
 
   def show_info(data, soldier_id)
-      content_tag(:h4, "Фамилия: #{Soldier.find(soldier_id).surname}") +
-      content_tag(:h4, "Дата: #{Russian.strftime(data, '%A %D').mb_chars.downcase}")
+    content_tag(:h4, "Фамилия: #{Soldier.find(soldier_id).surname}") +
+        content_tag(:h4, "Дата: #{Russian.strftime(data, '%A %D').mb_chars.downcase}")
+  end
+
+  def method_name(action_name)
+    action_name == 'update' ? 'PUT' : 'POST'
+  end
+
+  def get_value_name
+    return 'lesson' if @lesson
+    return 'patrol' if @patrol
+    nil
   end
 end

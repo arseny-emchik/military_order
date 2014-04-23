@@ -1,38 +1,40 @@
-<%= form_tag(action: action_name) do %>
+<%= form_tag({action: action_name, id: @lesson || @patrol, value_name: get_value_name}, method: method_name(action_name)) do %>
 
     <h4><%= kind_of_action(action_name) %></h4>
     <hr>
-    <%=show_info(@lesson.date || @patrol.patrol_start, @lesson.soldier_id || @patrol.soldier_id)%>
+    <%= show_info(@date, @soldier_id) %>
 
-    <%= hidden_field(:lesson, :date, value: @lesson.date) %>
-    <%= hidden_field(:lesson, :soldier_id, value: @lesson.soldier_id) %>
+    <%= hidden_field(:lesson, :date, value: @date) %>
+    <%= hidden_field(:lesson, :soldier_id, value: @soldier_id) %>
 
-    <%= hidden_field(:patrol, :patrol_start, value: @patrol.patrol_start) %>
-    <%= hidden_field(:patrol, :patrol_end, value: @patrol.patrol_end) %>
-    <%= hidden_field(:patrol, :soldier_id, value: @patrol.soldier_id) %>
+    <%= hidden_field(:patrol, :patrol_start, value: @date) %>
+    <%= hidden_field(:patrol, :patrol_end, value: @date + 1.day) %>
+    <%= hidden_field(:patrol, :soldier_id, value: @soldier_id) %>
 
-    <form class="form-horizontal">
-      <div class="well">
-        <div class="radio">
-          <label> пары</label>
-          <%= radio_button_tag(:patrol_present, 'false', checked = true) %>
-        </div>
-
-        <div class="form-group">
-          <label>Количество пар:</label>
-            <%= text_field(:lesson, :hours, class: 'form-control', placeholder: 'кол-во пар') %>
-        </div>
+    <div class="well">
+      <div class="radio">
+        <label> пары</label>
+        <%= radio_button_tag(:patrol_present, 'false', (checked = true if action_name == 'create' || @lesson)) %>
       </div>
 
-      <div class="well">
-        <div class="radio">
-          <label> наряд</label>
-          <%= radio_button_tag(:patrol_present, 'true') %>
-        </div>
+      <div class="form-group">
+        <label>Количество пар:</label>
+        <%= text_field(:lesson, :hours, class: 'form-control', placeholder: 'кол-во пар') %>
       </div>
-    </form>
-    <%= submit_tag('Save') %>
+    </div>
+
+    <div class="well">
+      <div class="radio">
+        <label> наряд</label>
+        <%= radio_button_tag(:patrol_present, 'true', (checked = true if action_name == 'update' && @patrol)) %>
+      </div>
+    </div>
+    <%= submit_tag('Сохранить', class: 'btn btn-primary') %>
+    <% if action_name == 'update' %>
+        <%= link_to 'Удалить', {action: 'destroy', id: @lesson || @patrol, value_name: get_value_name}, method: 'delete', class: 'btn btn-danger' %>
+    <% end %>
 <% end %>
+
 
 
 

@@ -42,36 +42,74 @@ class TimetablesController < ApplicationController
   end
 
   def update
-    #@lesson = Lesson.find(params[:id])
-    #@patrol = Patrol.find(params[:id])
-    #
-    #@lesson.attributes = lesson_params
-    #@patrol.attributes = patrol_params
-    #
-    #if @lesson.save && @patrol.save
-    #  redirect_to soldiers_path, notice: 'Post was successfully update.'
-    #else
-    #  render action: 'edit'
-    #end
+    value_name = params[:value_name]
+    is_patrol = params[:patrol_present]
+
+    if value_name == 'lesson' && is_patrol == 'false'
+      @lesson = Lesson.find(params[:id])
+      @lesson.attributes = lesson_params
+      @lesson.save
+      #redirect_to timetables_path, notice: 'Post was successfully update' if @lesson.save
+    end
+
+    if value_name == 'lesson' && is_patrol == 'true'
+      @lesson = Lesson.find(params[:id])
+      @lesson.destroy
+      @patrol = Patrol.new(patrol_params)
+      @patrol.save
+      #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
+    end
+
+    if value_name == 'patrol' && is_patrol == 'true'
+      @patrol = Patrol.find(params[:id])
+      @patrol.attributes = patrol_params
+      @patrol.save
+      #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
+    end
+
+    if value_name == 'patrol' && is_patrol == 'false'
+      @patrol = Patrol.find(params[:id])
+      @patrol.destroy
+      @lesson = Lesson.new(lesson_params)
+      @lesson.save
+      #redirect_to timetables_path, notice: 'Post was successfully update' if @lesson.save
+    end
+
+    redirect_to timetables_path
+    #redirect_to timetables_path, notice: 'UPDATE ERROR' if @lesson.save
   end
 
   def destroy
-    @lesson = Lesson.find(params[:id])
-    @lesson.destroy
-    @patrol = Patrol.find(params[:id])
-    @patrol.destroy
-    redirect_to soldier_url, notice: 'Post was successfully destroyed.'
+    value_name = params[:value_name]
+    if value_name == 'lesson'
+      @lesson = Lesson.find(params[:id])
+      @lesson.destroy
+    end
+
+    if value_name == 'patrol'
+      @patrol = Patrol.find(params[:id])
+      @patrol.destroy
+    end
+
+    redirect_to timetables_path
   end
 
   def ajax_load_form
-    @lesson = Lesson.new
-    @patrol = Patrol.new
-
-    @lesson.soldier_id = @patrol.soldier_id = get_soldier_id
-    @lesson.date = @patrol.patrol_start = get_date
-    @patrol.patrol_end = @patrol.patrol_start + 1.day
-
     action = params[:action_name]
+    @date = get_date
+    @soldier_id = get_soldier_id
+
+    if action == 'create'
+      @lesson = Lesson.new
+      @patrol = Patrol.new
+
+      @lesson.soldier_id = @patrol.soldier_id = @soldier_id
+      @lesson.date = @patrol.patrol_start = @date
+      @patrol.patrol_end = @patrol.patrol_start + 1.day
+    elsif action == 'edit'
+      @lesson = Lesson.where(date: @date, soldier_id: @soldier_id).first
+      @patrol = Patrol.where(patrol_start: @date, soldier_id: @soldier_id).first
+    end
 
     render action: action, layout: false
   end
