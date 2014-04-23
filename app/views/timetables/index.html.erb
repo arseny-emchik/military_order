@@ -81,11 +81,12 @@
   <div class="col-lg-3">
     <div class="well">
       <div class="row">
-        <div class="col-lg-4">
-          <h4>Скачать</h4>
+        <div class="col-lg-6">
+          <span style="float: right">
+            <%= link_to image_tag('excel.png', size: '60x60'), timetables_path(format: 'xls', year: @current_date.year, month: @current_date.month) %>
+          </span>
         </div>
-        <div class="col-lg-8">
-          <%= link_to image_tag('excel.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>
+        <div class="col-lg-6">
           <%= link_to image_tag('csv.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>
         </div>
       </div>

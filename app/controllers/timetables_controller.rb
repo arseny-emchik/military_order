@@ -11,7 +11,9 @@ class TimetablesController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { send_data export_csv, filename: "timetable_#{@current_date.year}_#{@current_date.month}.csv" }
-      #format.xls # { send_data @products.to_csv(col_sep: "\t") }
+      format.xls do
+        headers['Content-disposition'] = "inline;  filename='timetable_#{@current_date.year}_#{@current_date.month}.xls'"
+      end
     end
   end
 

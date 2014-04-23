@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Styles>
+    <Style ss:ID="day">
+        <Interior ss:Color="#e6e6fa" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="day_off">
+        <Interior ss:Color="#faf0e6" ss:Pattern="Solid"/>
+    </Style>
+    <Style ss:ID="fio">
+        <Font ss:Color="#423189"/>
+    </Style>
+  </Styles>
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell ss:StyleID="fio"><Data ss:Type="String">ФИО</Data></Cell>
+        <% 1.upto @current_date.end_of_month.day do |day| %>
+            <Cell ss:StyleID="day"><Data ss:Type="String"><%= day %></Data></Cell>
+        <% end %>
+      </Row>
+      <% @soldiers.each do |s| %>
+          <Row>
+            <Cell><Data ss:Type="String"><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></Data></Cell>
+            <% 1.upto @current_date.end_of_month.day do |day| %>
+                <% current_day = @current_date + day.day - 1 %>
+                <%= state_of_cell(:cell, current_day, s.id) %>
+            <% end %>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
