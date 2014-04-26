@@ -8,10 +8,8 @@ MilitaryOrder::Application.routes.draw do
   resources :soldiers, except: [:show]
   resources :settings, except: [:show]
 
-  devise_for :users, skip: [:registrations]
+  devise_for :users
   as :user do
-    get 'users/edit' => 'devise/registrations#edit', as:'edit_user_registration'
-    put 'users/:id' => 'devise/registrations#update', as: 'user_registration'
     root to: 'devise/sessions#new'
   end
 end
