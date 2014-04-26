@@ -1,0 +1,36 @@
+<!-- Table -->
+<table class="table table-striped ">
+  <thead>
+  <tr>
+    <th>Email или имя</th>
+    <th>Роль</th>
+    <th>Дата регистрации</th>
+    <th>Настройки</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% users(registered).each do |u| %>
+      <tr>
+        <th>
+          <%= email_or_name(u) %>
+        </th>
+        <th>
+          <%= define_role(u) %>
+        </th>
+        <th>
+          <%= u.created_at %>
+        </th>
+        <th>
+          <%= link_to setting_path(u), method: :delete, confirm: 'Вы точно уверены?' do
+            raw '<span style= "color: red" class="glyphicon glyphicon-remove">удалить</span>'
+          end %>
+          |
+          <%= link_to edit_setting_path(u) do
+            raw '<span class="glyphicon glyphicon-pencil">редактировать</span>'
+          end %>
+        </th>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr>

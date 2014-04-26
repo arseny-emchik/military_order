@@ -1,0 +1,10 @@
+<%= simple_form_for @user, url: setting_path(@user), method: 'put' do |f| %>
+
+    <%= render partial: 'settings/form', locals: {f: f} %>
+
+    <%= link_to settings_path, class: 'btn btn-primary' do
+      raw '<span class="glyphicon glyphicon-chevron-left"></span> Назад'
+    end
+    %>
+    <%= f.submit 'Сохранить', class: 'btn btn-primary' %>
+<% end %>

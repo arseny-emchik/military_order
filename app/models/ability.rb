@@ -6,8 +6,11 @@ class Ability
   def initialize(user)
        user ||= User.new # guest user (not logged in)
 
-       if user.admin?
+       if user.super_admin?
          can :manage, :all
+       elsif user.admin?
+         can :manage, :all
+         cannot [:edit, :update, :delete], SettingsController
        elsif user.member?
          can :read, :all
        end

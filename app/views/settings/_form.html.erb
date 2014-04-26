@@ -1,0 +1,11 @@
+<h3>Пользователь: <%= email_or_name(@user) %></h3>
+<h4>Дата регистрации: <%= @user.created_at %></h4>
+<h4>Дата последнего обновления: <%= @user.updated_at %></h4>
+<h4>Дата последнего посещения: <%= @user.last_sign_in_at || 'нет данных' %></h4>
+<hr>
+<%= f.input :name, label: 'Имя: ', placeholder: 'майор Паинт', input_html: {rows: 2, style: 'width: 30%'}, hint: 'вы можете заменить email на имя' %>
+<hr>
+<h3>Права доступа</h3>
+<%= f.input :admin, as: :boolean, label: 'админимстратор' %>
+<%= f.input :member, as: :boolean, label: 'пользователь'%>
+<hr>

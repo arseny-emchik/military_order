@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   layout :layout_by_resource
-  before_filter :initialize_for_layout, except: [:new]
+  before_filter :initialize_for_layout, except: [:new, :edit]
 
   private
 
