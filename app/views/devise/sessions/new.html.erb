@@ -1,24 +1,47 @@
-<div class="panel panel-default" style="width: 30%; margin: 5px auto">
-  <div class="panel-body">
+<div class="row">
+  <div class="col-lg-7">
+    <div class="panel panel-default" style="width: 55%; margin: 5px auto; float: right;">
+      <div class="panel-body">
 
-    <h2>Вход</h2>
+        <h2>Вход</h2>
 
-    <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
 
-        <div class="form-inputs">
-          <%= f.input :email, label: 'Email', :required => false, :autofocus => true %>
-          <%= f.input :password, label: 'Пароль', :required => false %>
-          <%= f.input :remember_me, label: 'Запомнить имя и пароль', :as => :boolean if devise_mapping.rememberable? %>
+            <div class="form-inputs">
+              <%= f.input :email, label: 'Email', :required => false, :autofocus => true %>
+              <%= f.input :password, label: 'Пароль', :required => false %>
+              <%= f.input :remember_me, label: 'Запомнить имя и пароль', :as => :boolean if devise_mapping.rememberable? %>
+            </div>
+
+            <div class="form-actions">
+              <%= f.button :submit, 'Войти'%>
+            </div>
+
+
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="panel panel-default" style="width: 70%; margin: 5px auto; float: left;">
+      <div class="panel-body">
+
+        <h3>Регистрация</h3>
+
+        <div class="well">
+          <p>
+            Это закрытое приложение.
+            После прохождения регистрации, Вам необходимо подождать, пока администрация проверит Ваши данные.
+          </p>
         </div>
 
-        <div class="form-actions">
-          <%= f.button :submit, 'Войти' %>
-        </div>
+        <%= link_to 'Регистрация', new_user_registration_path, class: 'btn btn-primary' %>
 
-
-    <% end %>
-
+      </div>
+    </div>
   </div>
 </div>
+
 

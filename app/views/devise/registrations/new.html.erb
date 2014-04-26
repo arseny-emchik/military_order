@@ -1,17 +1,25 @@
-<h2>Sign up</h2>
+<div class="panel panel-default" style="width: 40%; margin: 5px auto;">
+  <div class="panel-body">
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+    <h2>Регистрация</h2>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, required: true %>
-    <%= f.input :password_confirmation, required: true %>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= f.error_notification %>
+
+        <div class="form-inputs">
+          <%= f.input :email, label: 'Email', required: true, autofocus: true %>
+          <%= f.input :password, label: 'Пароль', required: true %>
+          <%= f.input :password_confirmation, label: 'Повторите пароль', required: true %>
+        </div>
+
+        <div class="form-actions">
+          <%= f.button :submit, "Подтвердить"%>
+        </div>
+    <% end %>
+
+    <hr>
+
+    <%= render "devise/shared/links" %>
+
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
