@@ -42,16 +42,16 @@ class TimetablesController < ApplicationController
 
   def update
     value_name = params[:value_name]
-    is_patrol = params[:patrol_present]
+    kind = params[:kind]
 
-    if value_name == 'lesson' && is_patrol == 'false'
+    if value_name == 'lesson' && kind == 'lesson'
       @lesson = Lesson.find(params[:id])
       @lesson.attributes = lesson_params
       @lesson.save
       #redirect_to timetables_path, notice: 'Post was successfully update' if @lesson.save
     end
 
-    if value_name == 'lesson' && is_patrol == 'true'
+    if value_name == 'lesson' && kind == 'patrol'
       @lesson = Lesson.find(params[:id])
       @lesson.destroy
       @patrol = Patrol.new(patrol_params)
@@ -59,14 +59,14 @@ class TimetablesController < ApplicationController
       #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
     end
 
-    if value_name == 'patrol' && is_patrol == 'true'
+    if value_name == 'patrol' && kind == 'patrol'
       @patrol = Patrol.find(params[:id])
       @patrol.attributes = patrol_params
       @patrol.save
       #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
     end
 
-    if value_name == 'patrol' && is_patrol == 'false'
+    if value_name == 'patrol' && kind == 'lesson'
       @patrol = Patrol.find(params[:id])
       @patrol.destroy
       @lesson = Lesson.new(lesson_params)
@@ -169,6 +169,7 @@ class TimetablesController < ApplicationController
     return 'н' unless patrol.nil?
     nil
   end
+
   # =================================================================
 
   def lesson_params

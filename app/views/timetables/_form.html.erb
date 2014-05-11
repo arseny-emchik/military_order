@@ -14,10 +14,10 @@
     <div class="well">
       <div class="radio">
         <label> пары</label>
-        <%= radio_button_tag(:patrol_present, 'false', (checked = true if action_name == 'create' || @lesson)) %>
+        <%= radio_button_tag(:kind, 'lesson', (checked = action_name == 'create' || @lesson)) %>
       </div>
 
-      <div class="form-group">
+      <div id="lessons" class="form-group" style="display: none">
         <label>Количество пар:</label>
         <%= text_field(:lesson, :hours, class: 'form-control', placeholder: 'кол-во пар') %>
       </div>
@@ -26,8 +26,10 @@
     <div class="well">
       <div class="radio">
         <label> наряд</label>
-        <%= radio_button_tag(:patrol_present, 'true', (checked = true if action_name == 'update' && @patrol)) %>
+        <%= radio_button_tag(:kind, 'patrol', (checked = action_name == 'update' && @patrol)) %>
       </div>
+
+      <div id="patrols" style="display: none">some text</div>
     </div>
     <%= submit_tag('Сохранить', class: 'btn btn-primary') %>
     <% if action_name == 'update' %>
@@ -35,6 +37,28 @@
     <% end %>
 <% end %>
 
+<script>
+  function rb_handler()
+  {
+
+      if($('#kind_lesson').is(':checked'))
+      {
+          $('#lessons').show();
+          $('#patrols').hide();
+      }
+      else
+      {
+          $('#patrols').show();
+          $('#lessons').hide();
+      }
+
+      //alert(this.value);
+  }
+
+  $(function(){
+      $('[name="kind"]').change(rb_handler).change();
+  })
+</script>
 
 
 
