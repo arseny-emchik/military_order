@@ -10,7 +10,7 @@ class Ability
          can :manage, :all
        elsif user.admin?
          can :manage, :all
-         cannot [:edit, :update, :delete], SettingsController
+         cannot [:delete], SettingsController
        elsif user.member?
          can :read, :all
        end

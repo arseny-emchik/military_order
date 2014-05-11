@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   Russian.init_i18n
 
   before_action :authenticate_user!
+
+  #rescue_from CanCan::AccessDenied do |exception|
+  #  render '', alert: exception.message  ##!!!!! have to change!!!
+  #end
+
   layout :layout_by_resource
   before_filter :initialize_for_layout, except: [:new, :edit]
 

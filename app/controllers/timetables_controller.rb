@@ -1,6 +1,5 @@
 class TimetablesController < ApplicationController
-
-  SPAN_YEARS = 5.freeze
+  #load_and_authorize_resource
 
   def index
     @color_day_off = '#faf0e6'

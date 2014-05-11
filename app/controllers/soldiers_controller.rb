@@ -1,4 +1,6 @@
 class SoldiersController < ApplicationController
+  load_and_authorize_resource
+
   def index
     @date_start = get_date('date_start')
     @date_end = get_date('date_end')
