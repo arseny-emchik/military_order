@@ -20,7 +20,7 @@ module TimetablesHelper
     end
 
     if tag == :cell
-      return "<Cell ss:StyleID='#{id}'><Data ss:Type='String'>#{ch}</Data></Cell>".html_safe
+      return "<Cell><Data ss:Type='String'>#{ch}</Data></Cell>".html_safe
     end
 
     content_tag(tag, style: "background-color: #{color}", data: {action: action, date: date.to_s, soldier_id: soldier_id}) do

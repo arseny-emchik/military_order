@@ -7,16 +7,52 @@
   <Styles>
     <Style ss:ID="day">
         <Interior ss:Color="#e6e6fa" ss:Pattern="Solid"/>
+        <Font ss:Bold="1" />
+        <NumberFormat ss:Format="Standard" />
+        <Borders>
+            <Border ss:Position="Left" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Right" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Top" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Bottom" ss:LineStyle="Dash" ss:Weight="0.8" />
+        </Borders>
+    </Style>
+    <Style ss:ID="name">
+        <Font ss:Bold="1" />
+        <NumberFormat ss:Format="Standard" />
+        <Borders>
+            <Border ss:Position="Left" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Right" ss:LineStyle="Dash" ss:Weight="0.8" />
+            <Border ss:Position="Top" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Bottom" ss:LineStyle="Dash" ss:Weight="0.5" />
+        </Borders>
     </Style>
     <Style ss:ID="day_off">
         <Interior ss:Color="#faf0e6" ss:Pattern="Solid"/>
     </Style>
     <Style ss:ID="fio">
         <Font ss:Color="#423189"/>
+        <Font ss:Bold="1" />
+        <NumberFormat ss:Format="Standard" />
+        <Borders>
+            <Border ss:Position="Left" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Right" ss:LineStyle="Dash" ss:Weight="0.8" />
+            <Border ss:Position="Top" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Bottom" ss:LineStyle="Dash" ss:Weight="0.8" />
+        </Borders>
+    </Style>
+    <Style ss:ID="table">
+        <Font ss:Bold="1" />
+        <NumberFormat ss:Format="Standard" />
+        <Borders>
+            <Border ss:Position="Left" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Right" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Top" ss:LineStyle="Dash" ss:Weight="0.5" />
+            <Border ss:Position="Bottom" ss:LineStyle="Dash" ss:Weight="0.5" />
+        </Borders>
     </Style>
   </Styles>
   <Worksheet ss:Name="Sheet1">
-    <Table>
+    <Table ss:StyleID="table">
       <Row>
         <Cell ss:StyleID="fio"><Data ss:Type="String">ФИО</Data></Cell>
         <% 1.upto @current_date.end_of_month.day do |day| %>
@@ -25,7 +61,7 @@
       </Row>
       <% @soldiers.each do |s| %>
           <Row>
-            <Cell><Data ss:Type="String"><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></Data></Cell>
+            <Cell ss:StyleID="name"><Data ss:Type="String"><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></Data></Cell>
             <% 1.upto @current_date.end_of_month.day do |day| %>
                 <% current_day = @current_date + day.day - 1 %>
                 <%= state_of_cell(:cell, current_day, s.id) %>
