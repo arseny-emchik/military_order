@@ -3,6 +3,7 @@
   <thead>
   <tr>
     <th>звание & ФИО</th>
+    <th><span style="float: right">Процент нарядов</span></th>
     <th><span style="float: right">Кол-во пар</span></th>
     <th><span style="float: right; color: red">Кол-во нарядов</span></th>
     <th><span style="float: right">Нарядов пт-сб</span></th>
@@ -15,6 +16,16 @@
         <th>
           <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
           <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
+        </th>
+        <th>
+          <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-info"
+                 role="progressbar"
+                 aria-valuemin="0" aria-valuemax="100"
+                 style="width: <%= get_percents(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %>">
+              <span class="sr-only"></span>
+            </div>
+          </div>
         </th>
         <th>
           <span style="float: right"><%= count_lessons(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>

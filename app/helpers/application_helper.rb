@@ -38,4 +38,11 @@ module ApplicationHelper
 
     (arr_date.empty?) ? 0 : Patrol.where('soldier_id = :soldier_id and patrol_start IN (:array)', array: arr_date, soldier_id: soldier_id).count
   end
+
+
+  def get_percents(date_start, date_end, soldier_id)
+    share_soldier = @current_date.end_of_month.day.to_f / Soldier.all.count.to_f
+    result = count_patrols(date_start, date_end, soldier_id) * 100.0 / share_soldier
+    result > 100 ? '100%' : result.to_s + '%'
+  end
 end

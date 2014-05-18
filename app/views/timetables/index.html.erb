@@ -19,53 +19,37 @@
 <hr>
 <%= render partial: 'timetables/main_table' %>
 <hr>
-<div class="row">
-  <div class="col-lg-9">
-    <h3>Статистика за <%= Russian.strftime(@current_date, '%B').mb_chars.downcase %>:</h3>
-    <%= render partial: 'timetables/statistics_table' %>
-  </div>
-  <div class="col-lg-3">
-    <div class="well">
-      <div class="row">
-        <div class="col-lg-6">
+
+<h3>
+  Статистика за <%= Russian.strftime(@current_date, '%B').mb_chars.downcase %>:
+  <button style="float: right" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">
+    Сохранить таблицу
+  </button>
+</h3>
+<%= render partial: 'timetables/statistics_table' %>
+
+
+<!-- Small modal -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="well">
+        <div class="row">
+          <h4 style="text-align:center">Скачать / распечатать</h4>
+          <hr>
+          <div class="col-lg-6">
           <span style="float: right">
             <%= link_to image_tag('excel.png', size: '60x60'), timetables_path(format: 'xls', year: @current_date.year, month: @current_date.month) %>
           </span>
-        </div>
-        <div class="col-lg-6">
-          <%= link_to image_tag('csv.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>
+          </div>
+          <div class="col-lg-6">
+            <%= link_to image_tag('csv.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>
+          </div>
         </div>
       </div>
-      <hr>
-      <h4>Легенда</h4>
-      <!-- Table -->
-      <table class="table">
-        <thead>
-        <tr>
-          <th>назначение</th>
-          <th>отображение</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <th>наряд</th>
-          <th style="background-color: #f5f5dc">н</th>
-        </tr>
-        <tr>
-          <th>кол-во пар</th>
-          <th style="background-color: #f5f5dc">4</th>
-        </tr>
-        <tr>
-          <th>выходной</th>
-          <th style="background-color: #faf0e6"></th>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
-
-
 
 <div id="dialog" title="Форма ввода">
   <p></p>
