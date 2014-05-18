@@ -1,4 +1,4 @@
-<%= form_tag({action: action_name, id: @lesson || @patrol, value_name: get_value_name}, method: method_name(action_name)) do %>
+<%= form_tag({action: action_name, id: @lesson || @patrol, last_value: get_value_name}, method: method_name(action_name)) do %>
 
     <h4><%= kind_of_action(action_name) %></h4>
     <hr>
@@ -14,7 +14,7 @@
     <div class="well">
       <div class="radio">
         <label> пары</label>
-        <%= radio_button_tag(:kind, 'lesson', (checked = action_name == 'create' || @lesson)) %>
+        <%= radio_button_tag(:new_value, 'lesson', (checked = action_name == 'create' || @lesson)) %>
       </div>
 
       <div id="lessons" class="form-group" style="display: none">
@@ -26,22 +26,21 @@
     <div class="well">
       <div class="radio">
         <label> наряд</label>
-        <%= radio_button_tag(:kind, 'patrol', (checked = action_name == 'update' && @patrol)) %>
+        <%= radio_button_tag(:new_value, 'patrol', (checked = action_name == 'update' && @patrol)) %>
       </div>
 
       <div id="patrols" style="display: none">some text</div>
     </div>
     <%= submit_tag('Сохранить', class: 'btn btn-primary') %>
     <% if action_name == 'update' %>
-        <%= link_to 'Удалить', {action: 'destroy', id: @lesson || @patrol, value_name: get_value_name}, method: 'delete', class: 'btn btn-danger' %>
+        <%= link_to 'Удалить', {action: 'destroy', id: @lesson || @patrol, last_value: get_value_name}, method: 'delete', class: 'btn btn-danger' %>
     <% end %>
 <% end %>
 
 <script>
   function rb_handler()
   {
-
-      if($('#kind_lesson').is(':checked'))
+      if($('#new_value_lesson').is(':checked'))
       {
           $('#lessons').show();
           $('#patrols').hide();
@@ -51,12 +50,10 @@
           $('#patrols').show();
           $('#lessons').hide();
       }
-
-      //alert(this.value);
   }
 
   $(function(){
-      $('[name="kind"]').change(rb_handler).change();
+      $('[name="new_value"]').change(rb_handler).change();
   })
 </script>
 

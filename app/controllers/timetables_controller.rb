@@ -22,14 +22,18 @@ class TimetablesController < ApplicationController
   end
 
   def create
-    if params[:patrol_present] == 'false'
+    if params[:new_value] == 'lesson'
       @lesson = Lesson.new(lesson_params)
-      redirect_to timetables_path, notice: 'Post was successfully created.' and return if @lesson.save
+
+      date = DateTime.strptime(lesson_params[:date])
+      redirect_to timetables_path(month: date.month, year: date.year), notice: 'Post was successfully created.' and return if @lesson.save
     end
 
-    if params[:patrol_present] == 'true'
+    if params[:new_value] == 'patrol'
       @patrol = Patrol.new(patrol_params)
-      redirect_to timetables_path, notice: 'Post was successfully created.' and return if @patrol.save
+
+      date = DateTime.strptime(patrol_params[:patrol_start])
+      redirect_to timetables_path(month: date.month, year: date.year), notice: 'Post was successfully created.' and return if @patrol.save
     end
 
     redirect_to timetables_path, notice: 'Save ERROR'
@@ -41,17 +45,18 @@ class TimetablesController < ApplicationController
   end
 
   def update
-    value_name = params[:value_name]
-    kind = params[:kind]
+    last_value = params[:last_value]
+    new_value = params[:new_value]
+    date = DateTime.strptime(lesson_params[:data] || patrol_params[:patrol_start])
 
-    if value_name == 'lesson' && kind == 'lesson'
+    if last_value == 'lesson' && new_value == 'lesson'
       @lesson = Lesson.find(params[:id])
       @lesson.attributes = lesson_params
       @lesson.save
       #redirect_to timetables_path, notice: 'Post was successfully update' if @lesson.save
     end
 
-    if value_name == 'lesson' && kind == 'patrol'
+    if last_value == 'lesson' && new_value == 'patrol'
       @lesson = Lesson.find(params[:id])
       @lesson.destroy
       @patrol = Patrol.new(patrol_params)
@@ -59,14 +64,14 @@ class TimetablesController < ApplicationController
       #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
     end
 
-    if value_name == 'patrol' && kind == 'patrol'
+    if last_value == 'patrol' && new_value == 'patrol'
       @patrol = Patrol.find(params[:id])
       @patrol.attributes = patrol_params
       @patrol.save
       #redirect_to timetables_path, notice: 'Post was successfully update' if @patrol.save
     end
 
-    if value_name == 'patrol' && kind == 'lesson'
+    if last_value == 'patrol' && new_value == 'lesson'
       @patrol = Patrol.find(params[:id])
       @patrol.destroy
       @lesson = Lesson.new(lesson_params)
@@ -74,23 +79,29 @@ class TimetablesController < ApplicationController
       #redirect_to timetables_path, notice: 'Post was successfully update' if @lesson.save
     end
 
-    redirect_to timetables_path
+    redirect_to timetables_path(month: date.month, year: date.year)
     #redirect_to timetables_path, notice: 'UPDATE ERROR' if @lesson.save
   end
 
   def destroy
-    value_name = params[:value_name]
-    if value_name == 'lesson'
+    last_value = params[:last_value]
+    date = Date.current
+
+    if last_value == 'lesson'
       @lesson = Lesson.find(params[:id])
+      date = @lesson.date
+
       @lesson.destroy
     end
 
-    if value_name == 'patrol'
+    if last_value == 'patrol'
       @patrol = Patrol.find(params[:id])
+      date = @patrol.patrol_start
+
       @patrol.destroy
     end
 
-    redirect_to timetables_path
+    redirect_to timetables_path(month: date.month, year: date.year)
   end
 
   def ajax_load_form
