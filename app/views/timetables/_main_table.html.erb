@@ -1,0 +1,22 @@
+<!-- Table -->
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ФИО</th>
+    <% 1.upto @current_date.end_of_month.day do |day| %>
+        <th><%= day %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @soldiers.each do |s| %>
+      <tr>
+        <th><%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %></th>
+        <% 1.upto @current_date.end_of_month.day do |day| %>
+            <% current_day = @current_date + day.day - 1 %>
+            <%= state_of_cell(:th, current_day, s.id) %>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
