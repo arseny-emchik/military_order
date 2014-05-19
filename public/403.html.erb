@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MilitaryOrder</title>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <div class="panel panel-default" style="width: 40%; margin: 10px auto;">
+    <div class="panel-body">
+      <div class="alert alert-danger">
+        <h4 style="text-align: center">У Вас нет прав доступа!</h4>
+      </div>
+      <div style="text-align: center"><%= image_tag('stop.png', size: '245x270') %></div>
+      <div class="alert alert-success">
+        <h4 style="text-align: center">Вы прошли регистрацию. Дождитесь пока администратор даст Вас права доступа.</h4>
+      </div>
+      <%= link_to('На главную', destroy_user_session_path, :method => 'delete', class: 'btn btn-success') %>
+    </div>
+  </div>
+</div>
+</body>

@@ -1,6 +1,10 @@
 class TimetablesController < ApplicationController
 
   def index
+    unless can? :read, TimetablesController
+      render file: "#{Rails.root}/public/403.html.erb", status: 403, layout: false and return
+    end
+
     @current_date = set_date
 
     @soldiers = Soldier.all
@@ -17,11 +21,15 @@ class TimetablesController < ApplicationController
   end
 
   def show_table
+    unless can? :read, TimetablesController
+      render file: "#{Rails.root}/public/403.html.erb", status: 403, layout: false and return
+    end
+
     @current_date = set_date
     @soldiers = Soldier.all
 
     render layout: false
-    authorize! :show_table, @soldiers
+    authorize! :index, @soldiers
   end
 
   def new

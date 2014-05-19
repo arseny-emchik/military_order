@@ -13,8 +13,6 @@ class Ability
          cannot [:delete], User
        elsif user.member?
          can :read, :all
-       else
-         can :read, :all
        end
   end
 end

@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   Russian.init_i18n
   before_action :authenticate_user!
 
-  #rescue_from CanCan::AccessDenied do |exception|
-  #  render '', alert: exception.message  ##!!!!! have to change!!!
-  #end
+  rescue_from CanCan::AccessDenied do |exception|
+    render file: "#{Rails.root}/public/403.html.erb", status: 403, layout: false
+  end
 
   layout :layout_by_resource
   before_filter :initialize_for_layout, except: [:new, :edit]
@@ -25,6 +25,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
+    #if can? :read, TimetablesController
+    #  timetables_path
+    #else
+    #  "#{Rails.root}/public/403.html.erb"
+    #end
     timetables_path
   end
 
