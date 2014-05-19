@@ -10,7 +10,7 @@ module TimetablesHelper
     ch = patrol.kind unless patrol.nil?
     ch = lesson.hours.to_s unless lesson.nil?
 
-    if date.saturday? || date.sunday?
+    if date.saturday? || date.sunday? || Celebrations.is_in?(date.month, date.day)
       color = '#faf0e6'
       #id = 'day_off'  # added color for day off
     elsif action == 'e'
