@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MilitaryOrder</title>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="container">
+  <hr>
+  <h3>Наряды и пары на <%= Russian.strftime(@current_date, '%B').mb_chars.downcase %>.</h3>
+  <%= render partial: 'timetables/main_table' %>
+  <a href="javascript:window.print()">Печать <span class="glyphicon glyphicon-print"></span></a>
+</div>
+</body>

@@ -1,6 +1,7 @@
 MilitaryOrder::Application.routes.draw do
   resources :timetables, except: [:show] do
     post :ajax_load_form, on: :collection
+    get :show_table, on: :collection
   end
 
   get 'csv' => 'timetables#export_csv', :as => :csv
