@@ -1,8 +1,6 @@
 class TimetablesController < ApplicationController
-  #load_and_authorize_resource
 
   def index
-    #@color_day_off = '#faf0e6'
     @current_date = set_date
 
     @soldiers = Soldier.all
@@ -14,6 +12,8 @@ class TimetablesController < ApplicationController
         headers['Content-disposition'] = "inline;  filename='timetable_#{@current_date.year}_#{@current_date.month}.xls'"
       end
     end
+
+    authorize! :index, @soldiers
   end
 
   def show_table
@@ -21,14 +21,21 @@ class TimetablesController < ApplicationController
     @soldiers = Soldier.all
 
     render layout: false
+    authorize! :show_table, @soldiers
   end
 
   def new
+    authorize! :new, Lesson
+    authorize! :new, Patrol
+
     @lesson = Lesson.new
     @patrol = Patrol.new
   end
 
   def create
+    authorize! :index, Lesson
+    authorize! :index, Patrol
+
     if params[:new_value] == 'lesson'
       @lesson = Lesson.new(lesson_params)
 
@@ -47,11 +54,17 @@ class TimetablesController < ApplicationController
   end
 
   def edit
+    authorize! :edit, Lesson
+    authorize! :edit, Patrol
+
     @lesson = Lesson.where(date: @lesson.date, soldier_id: @lesson.soldier_id).first
     @patrol = Patrol.where(patrol_end: @patrol.patrol_end, soldier_id: @patrol.soldier_id).first
   end
 
   def update
+    authorize! :update, Lesson
+    authorize! :update, Patrol
+
     last_value = params[:last_value]
     new_value = params[:new_value]
     date = DateTime.strptime(lesson_params[:data] || patrol_params[:patrol_end])
@@ -91,6 +104,9 @@ class TimetablesController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, Lesson
+    authorize! :destroy, Patrol
+
     last_value = params[:last_value]
     date = Date.current
 
@@ -112,6 +128,9 @@ class TimetablesController < ApplicationController
   end
 
   def ajax_load_form
+    authorize! [:create, :update], Lesson
+    authorize! [:create, :update], Patrol
+
     action = params[:action_name]
     @date = get_date
     @soldier_id = get_soldier_id

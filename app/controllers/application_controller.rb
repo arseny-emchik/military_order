@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   Russian.init_i18n
-
   before_action :authenticate_user!
 
   #rescue_from CanCan::AccessDenied do |exception|
