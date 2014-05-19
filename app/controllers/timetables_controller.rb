@@ -32,7 +32,7 @@ class TimetablesController < ApplicationController
     if params[:new_value] == 'patrol'
       @patrol = Patrol.new(patrol_params)
 
-      date = DateTime.strptime(patrol_params[:patrol_start])
+      date = DateTime.strptime(patrol_params[:patrol_end])
       redirect_to timetables_path(month: date.month, year: date.year), notice: 'Post was successfully created.' and return if @patrol.save
     end
 
@@ -41,13 +41,13 @@ class TimetablesController < ApplicationController
 
   def edit
     @lesson = Lesson.where(date: @lesson.date, soldier_id: @lesson.soldier_id).first
-    @patrol = Patrol.where(patrol_start: @patrol.patrol_start, soldier_id: @patrol.soldier_id).first
+    @patrol = Patrol.where(patrol_end: @patrol.patrol_end, soldier_id: @patrol.soldier_id).first
   end
 
   def update
     last_value = params[:last_value]
     new_value = params[:new_value]
-    date = DateTime.strptime(lesson_params[:data] || patrol_params[:patrol_start])
+    date = DateTime.strptime(lesson_params[:data] || patrol_params[:patrol_end])
 
     if last_value == 'lesson' && new_value == 'lesson'
       @lesson = Lesson.find(params[:id])
@@ -96,7 +96,7 @@ class TimetablesController < ApplicationController
 
     if last_value == 'patrol'
       @patrol = Patrol.find(params[:id])
-      date = @patrol.patrol_start
+      date = @patrol.patrol_end
 
       @patrol.destroy
     end
@@ -114,11 +114,11 @@ class TimetablesController < ApplicationController
       @patrol = Patrol.new
 
       @lesson.soldier_id = @patrol.soldier_id = @soldier_id
-      @lesson.date = @patrol.patrol_start = @date
-      @patrol.patrol_end = @patrol.patrol_start + 1.day
+      @lesson.date = @patrol.patrol_end = @date
+      @patrol.patrol_start = @patrol.patrol_end - 1.day
     elsif action == 'edit'
       @lesson = Lesson.where(date: @date, soldier_id: @soldier_id).first
-      @patrol = Patrol.where(patrol_start: @date, soldier_id: @soldier_id).first
+      @patrol = Patrol.where(patrol_end: @date, soldier_id: @soldier_id).first
     end
 
     render action: action, layout: false
@@ -175,7 +175,7 @@ class TimetablesController < ApplicationController
 
   def state_of_cell_csv(date, soldier_id)
     lesson = Lesson.where(date: date, soldier_id: soldier_id).first
-    patrol = Patrol.where(patrol_start: date, soldier_id: soldier_id).first
+    patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).first
     return lesson.hours.to_s unless lesson.nil?
     return 'н' unless patrol.nil?
     nil
@@ -188,6 +188,6 @@ class TimetablesController < ApplicationController
   end
 
   def patrol_params
-    params.require(:patrol).permit(:patrol_start, :patrol_end, :soldier_id)
+    params.require(:patrol).permit(:patrol_start, :patrol_end, :soldier_id, :kind)
   end
 end

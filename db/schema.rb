@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426111605) do
+ActiveRecord::Schema.define(version: 20140518210702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20140426111605) do
   end
 
   create_table "patrols", force: true do |t|
-    t.date     "patrol_start", null: false
-    t.date     "patrol_end",   null: false
+    t.date     "patrol_start",                         null: false
+    t.date     "patrol_end",                           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "soldier_id"
+    t.string   "kind",         limit: 1, default: "ф", null: false
   end
 
   create_table "ranks", force: true do |t|

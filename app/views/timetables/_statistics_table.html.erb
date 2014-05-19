@@ -5,9 +5,9 @@
     <th>звание & ФИО</th>
     <th><span style="float: right">Процент нарядов</span></th>
     <th><span style="float: right">Кол-во пар</span></th>
-    <th><span style="float: right; color: red">Кол-во нарядов</span></th>
+    <th><span style="float: right; color: red">Кол-во нарядов(ф/у)</span></th>
     <th><span style="float: right">Нарядов пт-сб</span></th>
-    <th><span style="float: right">Нарядов сб-вс</span></th>
+    <th><span style="float: right">Нарядов вс-пн</span></th>
   </tr>
   </thead>
   <tbody>
@@ -31,13 +31,14 @@
           <span style="float: right"><%= count_lessons(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
         </th>
         <th>
-          <span style="float: right; color: red"><%= count_patrols(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
+          <% f_patrols, y_patrols = count_patrols(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %>
+          <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
           <span style="float: right"><%= count_patrols_fr_sat(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
         </th>
         <th>
-          <span style="float: right"><%= count_patrols_sat_sun(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
+          <span style="float: right"><%= count_patrols_sun_mon(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
         </th>
       </tr>
   <% end %>

@@ -7,8 +7,8 @@
     <%= hidden_field(:lesson, :date, value: @date) %>
     <%= hidden_field(:lesson, :soldier_id, value: @soldier_id) %>
 
-    <%= hidden_field(:patrol, :patrol_start, value: @date) %>
-    <%= hidden_field(:patrol, :patrol_end, value: @date + 1.day) %>
+    <%= hidden_field(:patrol, :patrol_start, value: @date - 1.day) %>
+    <%= hidden_field(:patrol, :patrol_end, value: @date) %>
     <%= hidden_field(:patrol, :soldier_id, value: @soldier_id) %>
 
     <div class="well">
@@ -29,7 +29,20 @@
         <%= radio_button_tag(:new_value, 'patrol', (checked = action_name == 'update' && @patrol)) %>
       </div>
 
-      <div id="patrols" style="display: none">some text</div>
+      <div id="patrols" style="display: none">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="radio">
+              <label> наряд по факультету</label>
+              <%= radio_button(:patrol, :kind, 'ф') %>
+            </div>
+            <div class="radio">
+              <label> наряд по чемто еще</label>
+              <%= radio_button(:patrol, :kind, 'у') %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <%= submit_tag('Сохранить', class: 'btn btn-primary') %>
     <% if action_name == 'update' %>
@@ -38,23 +51,20 @@
 <% end %>
 
 <script>
-  function rb_handler()
-  {
-      if($('#new_value_lesson').is(':checked'))
-      {
-          $('#lessons').show();
-          $('#patrols').hide();
-      }
-      else
-      {
-          $('#patrols').show();
-          $('#lessons').hide();
-      }
-  }
+    function rb_handler() {
+        if ($('#new_value_lesson').is(':checked')) {
+            $('#lessons').show();
+            $('#patrols').hide();
+        }
+        else {
+            $('#patrols').show();
+            $('#lessons').hide();
+        }
+    }
 
-  $(function(){
-      $('[name="new_value"]').change(rb_handler).change();
-  })
+    $(function () {
+        $('[name="new_value"]').change(rb_handler).change();
+    })
 </script>
 
 

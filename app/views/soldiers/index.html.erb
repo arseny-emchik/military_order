@@ -8,9 +8,9 @@
       <tr>
         <th>звание & ФИО</th>
         <th><span style="float: right">Кол-во пар</span></th>
-        <th><span style="float: right">Кол-во нарядов</span></th>
+        <th><span style="float: right">Кол-во нарядов(ф/у)</span></th>
         <th><span style="float: right">Нарядов пт-сб</span></th>
-        <th><span style="float: right">Нарядов сб-вс</span></th>
+        <th><span style="float: right">Нарядов вс-пн</span></th>
       </tr>
       </thead>
       <tbody>
@@ -30,13 +30,14 @@
               <span style="float: right"><%= count_lessons(@date_start, @date_end, s.id) %></span>
             </th>
             <th>
-              <span style="float: right"><%= count_patrols(@date_start, @date_end, s.id) %></span>
+              <% f_patrols, y_patrols = count_patrols(@date_start, @date_end, s.id) %>
+              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
             </th>
             <th>
               <span style="float: right"><%= count_patrols_fr_sat(@date_start, @date_end, s.id) %></span>
             </th>
             <th>
-              <span style="float: right"><%= count_patrols_sat_sun(@date_start, @date_end, s.id) %></span>
+              <span style="float: right"><%= count_patrols_sun_mon(@date_start, @date_end, s.id) %></span>
             </th>
           </tr>
       <% end %>
@@ -69,7 +70,7 @@
           </div>
         </div>
 
-        <%= submit_tag 'Получить статистику', class: 'btn btn-primary', id: 'send_dates', name: nil%>
+        <%= submit_tag 'Получить статистику', class: 'btn btn-primary', id: 'send_dates', name: nil %>
     <% end %>
   </div>
 </div>

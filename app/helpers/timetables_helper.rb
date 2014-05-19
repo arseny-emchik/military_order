@@ -1,13 +1,13 @@
 module TimetablesHelper
   def state_of_cell(tag, date, soldier_id)
     lesson = Lesson.where(date: date, soldier_id: soldier_id).first
-    patrol = Patrol.where(patrol_start: date, soldier_id: soldier_id).first
+    patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).first
 
     action = (patrol.nil? && lesson.nil?) ? 'n' : 'e' # n - new; e - edit
 
     id = ''
     ch = nil
-    ch = 'н' unless patrol.nil?
+    ch = patrol.kind unless patrol.nil?
     ch = lesson.hours.to_s unless lesson.nil?
 
     if date.saturday? || date.sunday?
@@ -25,6 +25,20 @@ module TimetablesHelper
 
     content_tag(tag, style: "background-color: #{color}", data: {action: action, date: date.to_s, soldier_id: soldier_id}) do
       ch
+    end
+
+  end
+
+  def state_of_day_cell(tag, day)
+    color = '#ffffff'
+
+    date = @current_date.beginning_of_month + (day - 1)
+    patrol = Patrol.where(patrol_end: date)
+
+    color = '#fdeaa8' if (patrol.nil? || patrol.empty?) && date.sunday? == false
+
+    content_tag(tag, style: "background-color: #{color}") do
+      day.to_s
     end
 
   end

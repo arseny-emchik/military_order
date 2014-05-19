@@ -4,7 +4,7 @@
   <tr>
     <th>ФИО</th>
     <% 1.upto @current_date.end_of_month.day do |day| %>
-        <th><%= day %></th>
+        <%= state_of_day_cell(:th, day) %>
     <% end %>
   </tr>
   </thead>
