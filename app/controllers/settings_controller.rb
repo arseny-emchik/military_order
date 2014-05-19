@@ -2,13 +2,19 @@ class SettingsController < ApplicationController
 
   def index
     @users = User.all
+
+    authorize! :index, @users
   end
 
   def edit
+    authorize! :edit, User
+
     @user = User.find(params[:id])
   end
 
   def update
+    authorize! :update, User
+
     @user = User.find(params[:id])
     @user.attributes = user_params
     if @user.save
@@ -19,6 +25,8 @@ class SettingsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, User
+
     @user = User.find(params[:id])
     @user.destroy
     redirect_to settings_path
