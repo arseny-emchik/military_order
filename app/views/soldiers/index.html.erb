@@ -8,9 +8,11 @@
       <tr>
         <th>звание & ФИО</th>
         <th><span style="float: right">Кол-во пар</span></th>
-        <th><span style="float: right">Кол-во нарядов(ф/у)</span></th>
-        <th><span style="float: right">Нарядов пт-сб</span></th>
-        <th><span style="float: right">Нарядов вс-пн</span></th>
+        <th><span style="float: right">Наряды(ф/у)</span></th>
+        <th><span style="float: right">пт-сб(ф/у)</span></th>
+        <th><span style="float: right">сб-вс(ф/у)</span></th>
+        <th><span style="float: right">вс-пн(ф/у)</span></th>
+        <th><span style="float: right">Праздники(ф/у)</span></th>
       </tr>
       </thead>
       <tbody>
@@ -23,21 +25,31 @@
               <%= link_to edit_soldier_path(s) do
                 raw '<span class="glyphicon glyphicon-pencil"></span>'
               end %>
-              <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>
+              <!--<span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>-->
               <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
             </th>
             <th>
-              <span style="float: right"><%= count_lessons(@date_start, @date_end, s.id) %></span>
+              <span style="float: right"><%= count_lessons_by_date(@date_start, @date_end, s.id) %></span>
             </th>
             <th>
-              <% f_patrols, y_patrols = count_patrols(@date_start, @date_end, s.id) %>
+              <% f_patrols, y_patrols = count_patrols_by_date(@date_start, @date_end, s.id) %>
               <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
             </th>
             <th>
-              <span style="float: right"><%= count_patrols_fr_sat(@date_start, @date_end, s.id) %></span>
+              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :saturday) %>
+              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
             </th>
             <th>
-              <span style="float: right"><%= count_patrols_sun_mon(@date_start, @date_end, s.id) %></span>
+              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :sunday) %>
+              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
+            </th>
+            <th>
+              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :monday) %>
+              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
+            </th>
+            <th>
+              <% f_patrols, y_patrols = count_patrols_by_celebrations(@date_start, @date_end, s.id) %>
+              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
             </th>
           </tr>
       <% end %>
