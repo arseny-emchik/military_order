@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-lg-9">
-    <%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
-    <hr>
+    <% if can? :create, Soldier %>
+        <%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
+        <hr>
+    <% end %>
     <!-- Table -->
     <table class="table table-striped ">
       <thead>
@@ -88,7 +90,7 @@
 </div>
 
 <!--<div id="loader" style="display: none">-->
-  <!--<%= image_tag('ajax-loader.gif') %>-->
+<!--<%= image_tag('ajax-loader.gif') %>-->
 <!--</div>-->
 
 

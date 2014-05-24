@@ -19,8 +19,10 @@
       <a href='<%= "#{request.protocol}#{request.host_with_port}" %>'>Расписание</a></li>
     <li <%= 'class = "active"'.html_safe if @current_tab == :soldiers %>>
       <a href='<%= "#{request.protocol}#{request.host_with_port}/soldiers" %>'>Состав</a></li>
-    <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>>
-      <a href='<%= "#{request.protocol}#{request.host_with_port}/settings" %>'>Настройки</a></li>
+    <% if can? :update, User %>
+        <li <%= 'class = "active"'.html_safe if @current_tab == :settings %>>
+          <a href='<%= "#{request.protocol}#{request.host_with_port}/settings" %>'>Настройки</a></li>
+    <% end %>
     <li style="float: right">
       <% if user_signed_in? %>
           <form method="post">
