@@ -74,8 +74,6 @@ module ApplicationHelper
     return count_f, count_y
   end
 
-
-
   def get_percents(date_start, date_end, soldier_id)
     share_soldier = @current_date.end_of_month.day.to_f / Soldier.all.count.to_f
     f_patrols, y_patrols = count_patrols_by_date(date_start, date_end, soldier_id)
