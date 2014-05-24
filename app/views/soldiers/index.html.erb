@@ -82,10 +82,14 @@
           </div>
         </div>
 
-        <%= submit_tag 'Получить статистику', class: 'btn btn-primary', id: 'send_dates', name: nil %>
+        <%= submit_tag 'Получить статистику', class: 'btn btn-primary onload', id: 'send_dates', name: nil %>
     <% end %>
   </div>
 </div>
+
+<!--<div id="loader" style="display: none">-->
+  <!--<%= image_tag('ajax-loader.gif') %>-->
+<!--</div>-->
 
 
 <script type="text/javascript">
@@ -94,13 +98,17 @@
             pickTime: false,
             language: 'ru'
         });
-    });
 
-    $(function () {
         $('#date_end').datetimepicker({
             pickTime: false,
             language: 'ru'
         });
+
+//        $('.onload').click(page_load);
     });
+
+    function page_load() {
+        $('body').mask("Loading...");
+    }
 </script>
 

@@ -7,3 +7,4 @@
 //= require locales/bootstrap-datetimepicker.ru.js
 //= require bootstrap-colorpicker
 //= require jquery.ui.all
+//= require pace.min.js
