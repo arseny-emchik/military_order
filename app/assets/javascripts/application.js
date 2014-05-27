@@ -8,3 +8,4 @@
 //= require bootstrap-colorpicker
 //= require jquery.ui.all
 //= require pace.min.js
+//= require prettyCheckable.min.js

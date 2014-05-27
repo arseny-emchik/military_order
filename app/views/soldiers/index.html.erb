@@ -4,59 +4,13 @@
         <%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
         <hr>
     <% end %>
-    <!-- Table -->
-    <table class="table table-striped ">
-      <thead>
-      <tr>
-        <th>звание & ФИО</th>
-        <th><span style="float: right">Кол-во пар</span></th>
-        <th><span style="float: right">Наряды(ф/у)</span></th>
-        <th><span style="float: right">пт-сб(ф/у)</span></th>
-        <th><span style="float: right">сб-вс(ф/у)</span></th>
-        <th><span style="float: right">вс-пн(ф/у)</span></th>
-        <th><span style="float: right">Праздники(ф/у)</span></th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @soldiers.each do |s| %>
-          <tr>
-            <th>
-              <%= link_to soldier_path(s), method: :delete, confirm: 'Вы точно уверены?' do
-                raw '<span style= "color: red" class="glyphicon glyphicon-remove"></span>'
-              end %>
-              <%= link_to edit_soldier_path(s) do
-                raw '<span class="glyphicon glyphicon-pencil"></span>'
-              end %>
-              <!--<span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>-->
-              <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
-            </th>
-            <th>
-              <span style="float: right"><%= count_lessons_by_date(@date_start, @date_end, s.id) %></span>
-            </th>
-            <th>
-              <% f_patrols, y_patrols = count_patrols_by_date(@date_start, @date_end, s.id) %>
-              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
-            </th>
-            <th>
-              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :saturday) %>
-              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
-            </th>
-            <th>
-              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :sunday) %>
-              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
-            </th>
-            <th>
-              <% f_patrols, y_patrols = count_patrols_by_day(@date_start, @date_end, s.id, :monday) %>
-              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
-            </th>
-            <th>
-              <% f_patrols, y_patrols = count_patrols_by_celebrations(@date_start, @date_end, s.id) %>
-              <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
-            </th>
-          </tr>
-      <% end %>
-      </tbody>
-    </table>
+    <%= render partial: 'soldiers/table', locals: {date_start: @date_start, date_end: @date_end, kind: :main} %>
+    <% start_year = Date.new(Date.current.year, 1, 1); end_year = Date.new(Date.current.year, 12, 31) %>
+    <% 0.upto 3 do |index| %>
+        <div style="display: none" id="<%= (Date.current.year - index).to_s + 'y' %>">
+          <%= render partial: 'soldiers/table', locals: {date_start: start_year - index.year, date_end: end_year - index.year} %>
+        </div>
+    <% end %>
   </div>
   <div class="col-lg-3">
     <h4>Статистика</h4>
@@ -84,7 +38,19 @@
           </div>
         </div>
 
-        <%= submit_tag 'Получить статистику', class: 'btn btn-primary onload', id: 'send_dates', name: nil %>
+        <div style="text-align: right">
+          <%= submit_tag 'Получить статистику', class: 'btn btn-primary onload', id: 'send_dates', name: nil %>
+        </div>
+    <% end %>
+    <hr>
+    <% 0.upto 3 do |index| %>
+        <div class="checkbox statistics" id="<%= (Date.current.year - index).to_s %>">
+          <label>
+            <input type="checkbox" value="">
+            <h4>показать за <%= (Date.current.year - index).to_s %></h4>
+            <hr>
+          </label>
+        </div>
     <% end %>
   </div>
 </div>
@@ -106,11 +72,26 @@
             language: 'ru'
         });
 
+        $('.statistics').click(show_table);
+
 //        $('.onload').click(page_load);
     });
 
-    function page_load() {
-        $('body').mask("Loading...");
+    function show_table() {
+        var currentIdTable = '#' + $(this).attr('id') + 'y';
+        alert(currentIdTable);
+        if (this.checked) {
+            alert(currentIdTable);
+            $(currentIdTable).show();
+
+        }
+        else {
+            //$(currentIdTable).hide();
+        }
     }
+
+    //    function page_load() {
+    //        $('body').mask("Loading...");
+    //    }
 </script>
 
