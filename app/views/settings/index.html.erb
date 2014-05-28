@@ -1,17 +1,5 @@
 <div class="panel panel-info">
   <div class="panel-heading">
-    <h3 class="panel-title">Настройки цвета</h3>
-  </div>
-  <div class="panel-body">
-    <h4>Здесь Вы можете задать цвета, которые отобразятся в таблице.</h4>
-    <!--<a href="#" class="btn small" id="colorpicker" data-color-format="hex" data-color="rgb(255, 255, 255)">Change background color</a>-->
-    <%= link_to 'Сменить цвет выходных', '#', class: 'btn btn-success', id: 'colorpicker' %>
-    # функция пока недоступна
-  </div>
-</div>
-<hr>
-<div class="panel panel-info">
-  <div class="panel-heading">
     <h3 class="panel-title">Email и пароль</h3>
   </div>
   <div class="panel-body">
@@ -23,17 +11,32 @@
 </div>
 <hr>
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    <h3 class="panel-title">Пользователи</h3>
-  </div>
-  <div class="panel-body">
-    <h3>Прошли проверку</h3>
-    <%= render partial: 'settings/table', locals: {registered: true} %>
-    <h3>Ожидают проверку</h3>
-    <%= render partial: 'settings/table', locals: {registered: false} %>
-  </div>
-</div>
+<% if can? :update, User %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Настройки цвета</h3>
+      </div>
+      <div class="panel-body">
+        <h4>Здесь Вы можете задать цвета, которые отобразятся в таблице.</h4>
+        <!--<a href="#" class="btn small" id="colorpicker" data-color-format="hex" data-color="rgb(255, 255, 255)">Change background color</a>-->
+        <%= link_to 'Сменить цвет выходных', '#', class: 'btn btn-success', id: 'colorpicker' %>
+        # функция пока недоступна
+      </div>
+    </div>
+    <hr>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Пользователи</h3>
+      </div>
+      <div class="panel-body">
+        <h3>Прошли проверку</h3>
+        <%= render partial: 'settings/table', locals: {registered: true} %>
+        <h3>Ожидают проверку</h3>
+        <%= render partial: 'settings/table', locals: {registered: false} %>
+      </div>
+    </div>
+<% end %>
 
 
 <script type="text/javascript">
