@@ -3,7 +3,11 @@ module TimetablesHelper
     lesson = Lesson.where(date: date, soldier_id: soldier_id).first
     patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).first
 
-    action = (patrol.nil? && lesson.nil?) ? 'n' : 'e' # n - new; e - edit
+    if can? [:create, :update], [Patrol, Lesson]
+      action = (patrol.nil? && lesson.nil?) ? 'n' : 'e' # n - new; e - edit
+    else
+      action = 'nothing'
+    end
 
     id = ''
     ch = nil
