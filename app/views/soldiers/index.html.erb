@@ -44,13 +44,13 @@
     <% end %>
     <hr>
     <% 0.upto 3 do |index| %>
-        <div class="checkbox statistics" id="<%= (Date.current.year - index).to_s %>">
+        <div class="checkbox">
           <label>
-            <input type="checkbox" value="">
+            <input class="statistics" type="checkbox" id="<%= (Date.current.year - index).to_s %>">
             <h4>показать за <%= (Date.current.year - index).to_s %></h4>
-            <hr>
           </label>
         </div>
+        <hr>
     <% end %>
   </div>
 </div>
@@ -79,14 +79,11 @@
 
     function show_table() {
         var currentIdTable = '#' + $(this).attr('id') + 'y';
-        alert(currentIdTable);
         if (this.checked) {
-            alert(currentIdTable);
             $(currentIdTable).show();
-
         }
         else {
-            //$(currentIdTable).hide();
+            $(currentIdTable).hide();
         }
     }
 
