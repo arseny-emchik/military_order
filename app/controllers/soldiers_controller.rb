@@ -48,8 +48,12 @@ class SoldiersController < ApplicationController
   private
 
   def get_date(value_name)
-    return DateTime.strptime(params[value_name], '%d.%m.%Y') unless params[value_name].nil? || params[value_name].empty?
-    value_name == 'date_start' ? Date.current.beginning_of_month : Date.current.end_of_month
+    begin
+      return DateTime.strptime(params[value_name], '%d.%m.%Y') unless params[value_name].nil? || params[value_name].empty?
+      value_name == 'date_start' ? Date.current.beginning_of_month : Date.current.end_of_month
+    rescue ArgumentError
+      value_name == 'date_start' ? Date.current.beginning_of_month : Date.current.end_of_month
+    end
   end
 
   def soldier_params
