@@ -10,7 +10,7 @@ class Ability
          can :manage, :all
        elsif user.admin?
          can :manage, :all
-         cannot [:delete], User
+         can :manage, User, admin: false
        elsif user.member?
          can :read, :all
        end
