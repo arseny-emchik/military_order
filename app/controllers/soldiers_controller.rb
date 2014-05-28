@@ -1,5 +1,5 @@
 class SoldiersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource param_method: :soldier_params
 
   def index
     @date_start = get_date('date_start')
@@ -29,7 +29,8 @@ class SoldiersController < ApplicationController
   end
 
   def create
-    @soldier = Soldier.new(soldier_params)
+    @soldier = Soldier.new
+    @soldier.attributes = soldier_params
 
     if @soldier.save
       redirect_to soldiers_url, notice: 'Post was successfully created.'

@@ -51,5 +51,6 @@ gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 gem 'bootstrap-colorpicker-rails'
 gem 'devise'
 gem 'jquery-ui-rails'
-gem 'cancan'
+#gem 'cancan'
+gem 'cancancan'
 
