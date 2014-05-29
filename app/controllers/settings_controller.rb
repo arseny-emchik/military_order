@@ -1,21 +1,22 @@
 class SettingsController < ApplicationController
-  load_and_authorize_resource User, param_method: :user_params
 
   def index
     @users = User.all
+
+    authorize! :index, @users
   end
 
   def edit
+    authorize! :edit, User
+
     @user = User.find(params[:id])
-    redirect_to settings_path if @user.admin?  #hardcode
   end
 
   def update
+    authorize! :update, User
+
     @user = User.find(params[:id])
     @user.attributes = user_params
-
-    redirect_to settings_path and return if @user.admin?  #hardcode
-
     if @user.save
       redirect_to settings_path
     else
@@ -24,6 +25,8 @@ class SettingsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, User
+
     @user = User.find(params[:id])
     @user.destroy
     redirect_to settings_path
