@@ -7,14 +7,14 @@ class SettingsController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-    redirect_to settings_path if @user.super_admin?  #hardcode
+    redirect_to settings_path if @user.admin?  #hardcode
   end
 
   def update
     @user = User.find(params[:id])
     @user.attributes = user_params
 
-    redirect_to settings_path and return if @user.super_admin?  #hardcode
+    redirect_to settings_path and return if @user.admin?  #hardcode
 
     if @user.save
       redirect_to settings_path
