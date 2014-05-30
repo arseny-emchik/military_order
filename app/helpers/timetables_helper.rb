@@ -1,7 +1,7 @@
 module TimetablesHelper
   def state_of_cell(tag, date, soldier_id)
-    lesson = Lesson.where(date: date, soldier_id: soldier_id).first
-    patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).first
+    lesson = Lesson.where(date: date, soldier_id: soldier_id).limit(1).first
+    patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).limit(1).first
 
     if can? [:create, :update], [Patrol, Lesson]
       action = (patrol.nil? && lesson.nil?) ? 'n' : 'e' # n - new; e - edit
@@ -37,9 +37,9 @@ module TimetablesHelper
     color = '#ffffff'
 
     date = @current_date.beginning_of_month + (day - 1)
-    patrol = Patrol.where(patrol_end: date)
+    count_patrols = Patrol.where(patrol_end: date).count
 
-    color = '#fdeaa8' if (patrol.nil? || patrol.empty?) && date.sunday? == false
+    color = '#fdeaa8' if count_patrols == 0 #&& date.sunday? #now without day off
 
     content_tag(tag, style: "background-color: #{color}") do
       day.to_s
