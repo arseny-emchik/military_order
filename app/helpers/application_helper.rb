@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def count_notreg_users
+    User.all_available.not_registered.count
+  end
+
   def count_lessons_by_date(date_start, date_end, soldier_id)
     date_end, date_start = date_start, date_end if date_start > date_end
 

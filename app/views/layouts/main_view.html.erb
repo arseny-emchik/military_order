@@ -12,6 +12,12 @@
   <div class="page-header">
     <h1>Military Order
       <small># сегодня: <%= Russian.strftime(Time.now, '%d %B %Y') %></small>
+      <% not_registered_users = count_notreg_users; if not_registered_users > 0 && (can? :update, User) %>
+          <small id="popup" style="float: right; color: red">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>
+            +<%= not_registered_users %>
+          </small>
+      <% end %>
     </h1>
   </div>
   <ul class="nav nav-tabs">
@@ -31,6 +37,25 @@
   <br>
   <%= yield %>
 </div>
+
+<script>
+    $(function () {
+//        $('#popup').popover(  'show'
+//                //content='aaa'
+//        )
+
+        $('#popup').click(aa);
+
+        function aa() {
+            //alert("Дима лох")
+            $('#popup').popover('show').popover({
+                        animation: true
+                    }
+            );
+        }
+    })
+</script>
+
 
 </body>
 </html>
