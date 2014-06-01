@@ -13,10 +13,7 @@
     <h1>Military Order
       <small># сегодня: <%= Russian.strftime(Time.now, '%d %B %Y') %></small>
       <% not_registered_users = count_notreg_users; if not_registered_users > 0 && (can? :update, User) %>
-          <small id="popup" style="float: right; color: red">
-            <span class="glyphicon glyphicon-exclamation-sign"></span>
-            +<%= not_registered_users %>
-          </small>
+          <%= popup_win %>
       <% end %>
     </h1>
   </div>
@@ -38,21 +35,26 @@
   <%= yield %>
 </div>
 
-<script>
+<!-- our popup hidden content -->
+<div id="popover_content_wrapper" style="display: none">
+  <h5>Непроверенных пользователей: <%= not_registered_users %></h5>
+  <h5><strong>Для добавления перейдите в настройки!</strong></h5>
+</div>
+
+
+<script type="text/javascript">
     $(function () {
-//        $('#popup').popover(  'show'
-//                //content='aaa'
-//        )
-
-        $('#popup').click(aa);
-
-        function aa() {
-            //alert("Дима лох")
-            $('#popup').popover('show').popover({
-                        animation: true
+        $('#popup').popover({
+                    html: true,
+                    placement: 'left',
+                    animation: true,
+                    trigger: 'hover',
+                    title: 'Заявки на добавление',
+                    content: function () {
+                        return $('#popover_content_wrapper').html();
                     }
-            );
-        }
+                }
+        )
     })
 </script>
 

@@ -84,4 +84,13 @@ module ApplicationHelper
     result = (f_patrols + y_patrols) * 100.0 / share_soldier
     result > 100 ? '100%' : result.to_s + '%'
   end
+
+
+  def popup_win
+    content_tag(:small, style: "float: right") do
+      content_tag(:a, href: "#{request.protocol}#{request.host_with_port}/settings", id: "popup", rel: 'popover', style: "color: red") do
+       ('<span class="glyphicon glyphicon-exclamation-sign"></span>').html_safe
+      end
+    end
+  end
 end
