@@ -1,3 +1,4 @@
+<% lessons, patrols = get_all_workdays(@current_date.beginning_of_month, @current_date.end_of_month) %>
 <ul class="nav nav-pills nav-justified">
   <li>
     <div class="btn-group">
@@ -17,7 +18,7 @@
   <% end %>
 </ul>
 <hr>
-<%= render partial: 'timetables/main_table' %>
+<%= render partial: 'timetables/main_table', locals: {all_lessons: lessons, all_patrols: patrols} %>
 <hr>
 
 <h3>
@@ -26,7 +27,7 @@
     Сохранить таблицу
   </button>
 </h3>
-<%= render partial: 'timetables/statistics_table' %>
+<%= render partial: 'timetables/statistics_table', locals: {all_lessons: lessons, all_patrols: patrols} %>
 
 
 <!-- Small modal -->
@@ -43,10 +44,10 @@
           </span>
           </div>
           <!--<div class="col-lg-6">-->
-            <!--<%=link_to image_tag('print.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>-->
+          <!--<%= link_to image_tag('print.png', size: '60x60'), timetables_path(format: 'csv', year: @current_date.year, month: @current_date.month) %>-->
           <!--</div>-->
           <div class="col-lg-6">
-            <%=link_to image_tag('print.png', size: '60x60'), show_table_timetables_path(year: @current_date.year, month: @current_date.month), :target => '_blank' %>
+            <%= link_to image_tag('print.png', size: '60x60'), show_table_timetables_path(year: @current_date.year, month: @current_date.month), :target => '_blank' %>
           </div>
         </div>
       </div>

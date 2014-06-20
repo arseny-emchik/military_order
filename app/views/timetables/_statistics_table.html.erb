@@ -25,32 +25,42 @@
                  role="progressbar"
                  aria-valuemin="0" aria-valuemax="100"
                  aria-valuetransitiongoal="100"
-                 style="width: <%= get_percents(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %>">
+                 style="width: <%= get_percents(@current_date.beginning_of_month, @current_date.end_of_month, s.id, all_patrols) %>">
               <span class="sr-only"></span>
             </div>
           </div>
         </th>
         <th>
-          <span style="float: right"><%= count_lessons_by_date(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %></span>
+          <span style="float: right">
+            <%= count_lessons_by_date(@current_date.beginning_of_month,
+                                      @current_date.end_of_month,
+                                      s.id, all_lessons) %>
+          </span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_date(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %>
+          <% f_patrols, y_patrols = count_patrols_by_date(@current_date.beginning_of_month,
+                                                          @current_date.end_of_month,
+                                                          s.id, all_patrols) %>
           <span style="float: right; color: red"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month, s.id, :saturday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month,
+                                                         s.id, :saturday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month, s.id, :sunday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month,
+                                                         s.id, :sunday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month, s.id, :monday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(@current_date.beginning_of_month, @current_date.end_of_month,
+                                                         s.id, :monday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_celebrations(@current_date.beginning_of_month, @current_date.end_of_month, s.id) %>
+          <% f_patrols, y_patrols = count_patrols_by_celebrations(@current_date.beginning_of_month, @current_date.end_of_month,
+                                                                  s.id, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
       </tr>

@@ -1,26 +1,63 @@
 module ApplicationHelper
+  # ================================================================
+  # block of func for main_table
+  # ================================================================
+  def get_all_workdays(date_start, date_end)
+    date_end, date_start = date_start, date_end if date_start > date_end
+
+    lessons = Lesson.where('date >= :start AND date <= :end',
+                           start: date_start, end: date_end)
+    patrols = Patrol.where('patrol_end >= :start AND patrol_end <= :end',
+                           start: date_start, end: date_end)
+    return lessons, patrols
+  end
+
+  def det_solder_workdays(lessons, patrols, soldier_id)
+    solder_lessons = []
+    solder_patrols = []
+    lessons.each { |l| solder_lessons << l if l[:soldier_id] == soldier_id }
+    patrols.each { |p| solder_patrols << p if p[:soldier_id] == soldier_id }
+    return solder_lessons, solder_patrols
+  end
+
+  def get_solder_lesson(date, lessons)
+    lessons.each { |l| return l if l[:date] == date }
+    nil
+  end
+
+  def get_solder_patrol(date, patrols)
+    patrols.each { |p| return p if p[:patrol_end] == date }
+    nil
+  end
+
+  # ================================================================
+
   def count_notreg_users
     User.all_available.not_registered.count
   end
 
-  def count_lessons_by_date(date_start, date_end, soldier_id)
+  def count_lessons_by_date(date_start, date_end, soldier_id, lessons)
     date_end, date_start = date_start, date_end if date_start > date_end
 
-    Lesson.where('date >= :start AND date <= :end AND soldier_id = :soldier_id',
-                 start: date_start, end: date_end, soldier_id: soldier_id).sum(:hours)
+    sum = 0
+    lessons.each { |l| sum += l.hours if l.soldier_id == soldier_id }
+    sum
   end
 
-  def count_patrols_by_date(date_start, date_end, soldier_id)
+  def count_patrols_by_date(date_start, date_end, soldier_id, patrols)
     date_end, date_start = date_start, date_end if date_start > date_end
 
-    f_count = Patrol.where('patrol_end >= :start AND patrol_end <= :end AND soldier_id = :soldier_id AND kind = :kind',
-                           start: date_start, end: date_end, soldier_id: soldier_id, kind: 'ф').count
-    y_count = Patrol.where('patrol_end >= :start AND patrol_end <= :end AND soldier_id = :soldier_id AND kind = :kind',
-                           start: date_start, end: date_end, soldier_id: soldier_id, kind: 'у').count
+    f_count = 0
+    y_count = 0
+    patrols.each do |p|
+      f_count += 1 if p.soldier_id == soldier_id && p.kind == 'ф'
+      y_count += 1 if p.soldier_id == soldier_id && p.kind == 'у'
+    end
+
     return f_count, y_count
   end
 
-  def count_patrols_by_day(date_start, date_end, soldier_id, type_last_day)
+  def count_patrols_by_day(date_start, date_end, soldier_id, type_last_day, patrols)
     date_end, date_start = date_start, date_end if date_start > date_end
 
     arr_date = []
@@ -29,8 +66,13 @@ module ApplicationHelper
       arr_date << current_date if this_type_day?(type_last_day, current_date)
     end
 
-    f_count = (arr_date.empty?) ? 0 : Patrol.where('soldier_id = :soldier_id AND kind = :kind AND patrol_end IN (:array)', array: arr_date, soldier_id: soldier_id, kind: 'ф').count
-    y_count = (arr_date.empty?) ? 0 : Patrol.where('soldier_id = :soldier_id AND kind = :kind AND patrol_end IN (:array)', array: arr_date, soldier_id: soldier_id, kind: 'у').count
+    f_count = 0
+    y_count = 0
+    patrols.each do |p|
+      f_count += 1 if p.soldier_id == soldier_id && p.kind == 'ф' && arr_date.include?(p.patrol_end)
+      y_count += 1 if p.soldier_id == soldier_id && p.kind == 'у' && arr_date.include?(p.patrol_end)
+    end
+
     return f_count, y_count
   end
 
@@ -57,30 +99,22 @@ module ApplicationHelper
              end
   end
 
-  def count_patrols_by_celebrations(date_start, date_end, soldier_id)
+  def count_patrols_by_celebrations(date_start, date_end, soldier_id, patrols)
     date_end, date_start = date_start, date_end if date_start > date_end
 
-    all_patrols_f = Patrol.where('patrol_end >= :start AND patrol_end <= :end AND soldier_id = :soldier_id AND kind = :kind',
-                               start: date_start, end: date_end, soldier_id: soldier_id, kind: 'ф')
-    all_patrols_y = Patrol.where('patrol_end >= :start AND patrol_end <= :end AND soldier_id = :soldier_id AND kind = :kind',
-                                 start: date_start, end: date_end, soldier_id: soldier_id, kind: 'у')
-
-    count_f = 0
-    all_patrols_f.each do |f|
-      count_f += 1 if Celebrations.is_in?(f.patrol_end.month, f.patrol_end.day)
+    f_count = 0
+    y_count = 0
+    patrols.each do |p|
+      f_count += 1 if p.soldier_id == soldier_id && p.kind == 'ф' && Celebrations.is_in?(p.patrol_end.month, p.patrol_end.day)
+      y_count += 1 if p.soldier_id == soldier_id && p.kind == 'у' && Celebrations.is_in?(p.patrol_end.month, p.patrol_end.day)
     end
 
-    count_y = 0
-    all_patrols_y.each do |y|
-      count_y += 1 if Celebrations.is_in?(y.patrol_end.month, y.patrol_end.day)
-    end
-
-    return count_f, count_y
+    return f_count, y_count
   end
 
-  def get_percents(date_start, date_end, soldier_id)
+  def get_percents(date_start, date_end, soldier_id, patrols)
     share_soldier = @current_date.end_of_month.day.to_f / Soldier.all.count.to_f
-    f_patrols, y_patrols = count_patrols_by_date(date_start, date_end, soldier_id)
+    f_patrols, y_patrols = count_patrols_by_date(date_start, date_end, soldier_id, patrols)
     result = (f_patrols + y_patrols) * 100.0 / share_soldier
     result > 100 ? '100%' : result.to_s + '%'
   end
@@ -89,7 +123,7 @@ module ApplicationHelper
   def popup_win
     content_tag(:small, style: "float: right") do
       content_tag(:a, href: "#{request.protocol}#{request.host_with_port}/settings", id: "popup", rel: 'popover', style: "color: red") do
-       ('<span class="glyphicon glyphicon-exclamation-sign"></span>').html_safe
+        ('<span class="glyphicon glyphicon-exclamation-sign"></span>').html_safe
       end
     end
   end

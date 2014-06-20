@@ -1,7 +1,9 @@
 module TimetablesHelper
-  def state_of_cell(tag, date, soldier_id)
-    lesson = Lesson.where(date: date, soldier_id: soldier_id).limit(1).first
-    patrol = Patrol.where(patrol_end: date, soldier_id: soldier_id).limit(1).first
+  def state_of_cell(tag, date, soldier_id, lessons, patrols)
+    solder_lessons, solder_patrols = det_solder_workdays(lessons, patrols, soldier_id)
+
+    lesson = get_solder_lesson(date, solder_lessons)
+    patrol = get_solder_patrol(date, solder_patrols)
 
     if can? [:create, :update], [Patrol, Lesson]
       action = (patrol.nil? && lesson.nil?) ? 'n' : 'e' # n - new; e - edit
