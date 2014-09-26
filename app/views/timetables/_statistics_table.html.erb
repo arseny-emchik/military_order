@@ -13,7 +13,7 @@
   </tr>
   </thead>
   <tbody>
-  <% soldiers_sort.each do |s| %>
+  <% soldiers_sort(@current_date).each do |s| %>
       <tr>
         <th>
           <span style="color: #cfcfcf"><%= Rank.find(s.rank_id).title + ' ' %></span>

@@ -49,8 +49,8 @@ module TimetablesHelper
 
   end
 
-  def soldiers_sort
-    Soldier.sort_by_patrols('asc')
+  def soldiers_sort(current_data)
+    Soldier.sort_by_patrols(@current_date.beginning_of_month, @current_date.end_of_month, 'asc')
   end
 
   def kind_of_action(action)
