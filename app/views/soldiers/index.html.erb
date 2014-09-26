@@ -1,14 +1,27 @@
+<% lessons, patrols = get_all_workdays(@date_start, @date_end) %>
 <div class="row">
   <div class="col-lg-9">
     <% if can? :create, Soldier %>
         <%= link_to 'Добавить человека', new_soldier_path, class: 'btn btn-success' %>
         <hr>
     <% end %>
-    <%= render partial: 'soldiers/table', locals: {date_start: @date_start, date_end: @date_end, kind: :main} %>
+    <%= render partial: 'soldiers/table', locals: {
+                    date_start: @date_start,
+                    date_end: @date_end,
+                    kind: :main,
+                    all_lessons: lessons,
+                    all_patrols: patrols
+            } %>
     <% start_year = Date.new(Date.current.year, 1, 1); end_year = Date.new(Date.current.year, 12, 31) %>
     <% 0.upto 3 do |index| %>
         <div style="display: none" id="<%= (Date.current.year - index).to_s + 'y' %>">
-          <%= render partial: 'soldiers/table', locals: {date_start: start_year - index.year, date_end: end_year - index.year} %>
+          <% lessons, patrols = get_all_workdays(start_year - index.year, end_year - index.year) %>
+          <%= render partial: 'soldiers/table', locals: {
+                          date_start: start_year - index.year,
+                          date_end: end_year - index.year,
+                          all_lessons: lessons,
+                          all_patrols: patrols
+                  } %>
         </div>
     <% end %>
   </div>

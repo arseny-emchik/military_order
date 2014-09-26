@@ -37,26 +37,26 @@
           <%= s.surname + ' ' + s.name[0] + '.' + s.patronymic[0] + '.' %>
         </th>
         <th>
-          <span style="float: right"><%= count_lessons_by_date(date_start, date_end, s.id) %></span>
+          <span style="float: right"><%= count_lessons_by_date(date_start, date_end, s.id, all_lessons) %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_date(date_start, date_end, s.id) %>
+          <% f_patrols, y_patrols = count_patrols_by_date(date_start, date_end, s.id, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :saturday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :saturday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :sunday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :sunday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :monday) %>
+          <% f_patrols, y_patrols = count_patrols_by_day(date_start, date_end, s.id, :monday, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
         <th>
-          <% f_patrols, y_patrols = count_patrols_by_celebrations(date_start, date_end, s.id) %>
+          <% f_patrols, y_patrols = count_patrols_by_celebrations(date_start, date_end, s.id, all_patrols) %>
           <span style="float: right"><%= "#{f_patrols} / #{y_patrols}" %></span>
         </th>
       </tr>
